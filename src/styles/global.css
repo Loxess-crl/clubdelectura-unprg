@@ -1,0 +1,11 @@
+a.link-underline {
+  background: linear-gradient(90deg, currentColor, currentColor) no-repeat right
+    bottom / 0 var(--bg-h);
+  transition: background-size 350ms;
+  --bg-h: 0.1em;
+
+  &:where(:hover, :focus-visible, :active) {
+    background-size: 100% var(--bg-h);
+    background-position-x: left;
+  }
+}

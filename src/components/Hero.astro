@@ -1,0 +1,17 @@
+---
+import { Image } from "astro:assets";
+
+const banner_unprg = await import("@assets/images/unprg_banner.jpg");
+---
+
+<section class="p-4 mt-8 animate-fadeIn">
+  <div class="flex flex-col justify-center items-center md:flex-row">
+    <Image class="h-80 w-96" src={banner_unprg.default} alt="UNPRG" />
+    <div
+      class="p-4 flex flex-col justify-center items-center border-4 h-56 border-black z-10 -translate-y-24 md:-translate-x-24 md:-translate-y-0 bg-white"
+    >
+      <h1 class="text-5xl font-allura font-bold">Club de Lectura</h1>
+      <p class="text-2xl font-edu pt-2">de la UNPRG</p>
+    </div>
+  </div>
+</section>
