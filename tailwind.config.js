@@ -5,7 +5,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        banner: "#90AACF",
+        primary: "#90AACF",
+        surface: "#F5F5F0",
       },
       fontFamily: {
         allura: ["Allura", "cursive"],
@@ -13,9 +14,9 @@ export default {
         sans: ["Lora", ...defaultTheme.fontFamily.sans],
       },
       animation: {
-        fadeIn: "fadeIn 1s ease-in-out forwards",
-        down: "down 0.5s ease-in-out forwards",
-        up: "up 0.5s ease-in-out forwards",
+        fadeIn: "fadeIn 2s ease-in-out forwards",
+        down: "down 1.5s ease-in-out forwards",
+        up: "up 1.5s ease-in-out forwards",
       },
       keyframes: {
         fadeIn: {

@@ -1,12 +1,22 @@
 ---
+import FeaturedBooks from "@/components/FeaturedBooks.astro";
 import Hero from "@/components/Hero.astro";
-import HeroText from "@/components/HeroText.astro";
+import ClubInformation from "@/components/ClubInformation.astro";
 import Navbar from "@/components/Navbar.astro";
 import Layout from "@layouts/Layout.astro";
+
+import { getCollection } from "astro:content";
+
+const books = await getCollection("books");
+
+const lastBook = books.sort((a, b) => {
+  return b.data.week - a.data.week;
+})[0];
 ---
 
 <Layout title="Club de Lectura - UNPRG" lang="es-PE">
   <Navbar />
   <Hero />
-  <HeroText />
+  <ClubInformation book={lastBook} />
+  <FeaturedBooks books={books} />
 </Layout>

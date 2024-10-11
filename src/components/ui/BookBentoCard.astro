@@ -1,0 +1,49 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BookImage from "./BookImage.astro";
+
+interface Props {
+  book: CollectionEntry<"books">;
+}
+const { book } = Astro.props;
+---
+
+<div class="mx-auto">
+  <div
+    class="flex flex-col md:flex-row gap-4 md:gap-12 items-center md:items-start"
+  >
+    <BookImage book={book} className="w-32 md:w-60" />
+
+    <!-- Book information section -->
+    <div class="w-full md:w-1/2 hidden md:block space-y-2">
+      <div class="space-y-2">
+        <h2 class="text-xl font-bold text-gray-800">
+          {book.data.title}
+        </h2>
+        <div class="flex items-center space-x-4 text-gray-600">
+          <span class="text-sm">{book.data.authors}</span>
+          <span class="w-1.5 h-1.5 bg-gray-400 rounded-full"></span>
+          <span class="text-sm">{book.data.pubyear}</span>
+        </div>
+      </div>
+
+      <div class="w-16 h-1 bg-primary"></div>
+
+      <p class="text-xs text-gray-700 leading-relaxed text-pretty">
+        {book.data.description}
+      </p>
+      <button
+        class="mt-6 px-4 py-3 text-sm bg-primary text-white rounded-lg transition-all duration-300 hover:bg-blue-600 hover:shadow-lg"
+      >
+        Leer más
+      </button>
+    </div>
+    <div class="block md:hidden">
+      <button
+        class="px-4 py-3 text-sm bg-primary text-white rounded-lg transition-all duration-300 hover:bg-blue-600 hover:shadow-lg"
+      >
+        Leer más
+      </button>
+    </div>
+  </div>
+</div>

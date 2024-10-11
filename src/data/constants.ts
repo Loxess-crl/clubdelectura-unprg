@@ -42,5 +42,5 @@ export const OG = {
 };
 
 export const links = {
-  whatsapp: "https://wa.link/rdujj9",
+  whatsapp: "https://chat.whatsapp.com/DmsyPbaNT375TlnccC6M2T",
 };

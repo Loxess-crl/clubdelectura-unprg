@@ -9,3 +9,7 @@ a.link-underline {
     background-position-x: left;
   }
 }
+
+.card {
+  @apply bg-white/90 rounded-lg shadow-md p-4 hover:scale-[1.015] transition-transform;
+}

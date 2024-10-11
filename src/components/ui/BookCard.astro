@@ -1,0 +1,40 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  book: CollectionEntry<"books">;
+  className?: string;
+}
+
+const { book, className } = Astro.props;
+const { bookImage, title, authors } = book.data;
+---
+
+<div class="group relative">
+  <div
+    class={`relative transition-all duration-500 transform group-hover:-translate-y-2 group-hover:rotate-y-[-5deg]`}
+    style={{
+      transformStyle: "preserve-3d",
+      perspective: "1000px",
+    }}
+  >
+    <Image
+      src={bookImage}
+      alt={title}
+      class=`rounded-lg shadow-lg ${className}`
+    />
+    <div
+      class="absolute top-0 right-0 h-full w-4 bg-gray-200"
+      style={{
+        transform: "translateX(100%) rotateY(90deg)",
+        transformOrigin: "left",
+      }}
+    >
+    </div>
+    <div class="mt-4">
+      <h3 class="font-medium">{title}</h3>
+      <p class="text-gray-500 text-sm">{authors}</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  book: CollectionEntry<"books">;
+  className?: string;
+}
+
+const { book, className } = Astro.props;
+---
+
+<section>
+  <div class="relative group">
+    <div class="flex justify-center">
+      <div
+        class="relative transition-transform duration-700 ease-out transform group-hover:rotate-y-[-30deg] group-hover:scale-105"
+        style={{
+          perspective: "1500px",
+        }}
+      >
+        <div
+          class="relative"
+          style={{
+            transformStyle: "preserve-3d",
+            transform: "rotateY(-15deg)",
+          }}
+        >
+          <Image
+            src={book.data.bookImage}
+            alt="Book cover"
+            class={`rounded-lg shadow-lg ${className}`}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class={`h-full flex justify-center`}>
+    <div class="relative group">
+      <div
+        class="relative transition-transform duration-700 ease-out transform group-hover:rotate-y-[-30deg] group-hover:scale-105"
+        style="
+          transform-style: preserve-3d;
+          perspective: 1500px;
+          transform-origin: left;
+        "
+      >
+        <Image
+          src={book.data.bookImage}
+          alt={book.data.title}
+          class={`rounded-lg shadow-2xl ${className}`}
+        />
+
+        <div
+          class="absolute top-0 right-0 h-full w-8 bg-gray-200 transition-colors duration-700 ease-in-out"
+          style="
+            transform: translateX(100%) rotateY(90deg);
+            transform-origin: left;
+          "
+        >
+          <div
+            class="w-full h-full bg-gradient-to-l from-gray-200 to-gray-400 group-hover:from-indigo-400 group-hover:to-indigo-600"
+          >
+          </div>
+        </div>
+
+        <div
+          class="absolute inset-0 bg-gray-200 rounded-lg transition-opacity duration-700 ease-out"
+          style="
+            transform: translateZ(-4px);
+            backface-visibility: hidden;
+          "
+        >
+        </div>
+      </div>
+
+      <div
+        class="absolute bottom-0 left-1/2 w-full h-1/2 -translate-x-1/2 translate-y-1/2 bg-gradient-to-t from-black/20 to-transparent blur-2xl rounded-full opacity-70 transition-all duration-700 group-hover:rotate-[-25deg] group-hover:translate-x-[-60%] group-hover:opacity-100"
+        style="transform-origin: center top;"
+      >
+      </div>
+    </div>
+  </div> -->
+</section>
