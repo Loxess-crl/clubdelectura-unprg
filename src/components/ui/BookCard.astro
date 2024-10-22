@@ -8,10 +8,10 @@ interface Props {
 }
 
 const { book, className } = Astro.props;
-const { bookImage, title, authors } = book.data;
+const { bookImage, title, authors, description } = book.data;
 ---
 
-<div class="group relative">
+<!-- <div class="group relative">
   <div
     class={`relative transition-all duration-500 transform group-hover:-translate-y-2 group-hover:rotate-y-[-5deg]`}
     style={{
@@ -35,6 +35,20 @@ const { bookImage, title, authors } = book.data;
     <div class="mt-4">
       <h3 class="font-medium">{title}</h3>
       <p class="text-gray-500 text-sm">{authors}</p>
+    </div>
+  </div>
+</div> --><!-- LO DE YT --><!-- https://github.com/HoanghoDev/slider_3 -->
+<div class="item">
+  <Image src={bookImage} alt={title} />
+  <div class="intro">
+    <div class="title">
+      {title}
+    </div>
+    <div class="topic">
+      {authors}
+    </div>
+    <div class="des">
+      {description}
     </div>
   </div>
 </div>

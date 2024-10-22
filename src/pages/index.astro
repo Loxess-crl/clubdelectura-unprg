@@ -1,11 +1,11 @@
 ---
-import FeaturedBooks from "@/components/FeaturedBooks.astro";
 import Hero from "@/components/Hero.astro";
 import ClubInformation from "@/components/ClubInformation.astro";
 import Navbar from "@/components/Navbar.astro";
 import Layout from "@layouts/Layout.astro";
 
 import { getCollection } from "astro:content";
+import FeaturedBooks from "@/components/FeaturedBooks.astro";
 
 const books = await getCollection("books");
 

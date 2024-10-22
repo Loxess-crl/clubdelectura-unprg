@@ -4,6 +4,7 @@ const bookCollection = defineCollection({
   type: "content",
   schema: ({ image }) =>
     z.object({
+      id: z.string(),
       title: z.string(),
       description: z.string(),
       authors: z.array(z.string()),

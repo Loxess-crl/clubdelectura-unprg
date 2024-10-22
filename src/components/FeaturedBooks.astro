@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import Carousel from "./FeaturedBooks";
 import BookImage from "./ui/BookImage.astro";
 import BookCard from "./ui/BookCard.astro";
 
@@ -12,52 +13,21 @@ const { books } = Astro.props;
 
 <section>
   <!-- https://www.youtube.com/watch?v=hfGz5AgHT-E -->
-  <div class="min-h-screen bg-surface p-8">
-    <div class="max-w-6xl mx-auto bg-white rounded-3xl p-12">
-      {/* Header section */}
+  <div class="min-h-screen bg-surface md:p-8 py-8">
+    <div class="w-full md:max-w-6xl mx-auto bg-white rounded-3xl p-12">
       <div class="mb-12">
         <h1 class="text-4xl font-bold mb-4">Lecturas Recientes</h1>
         <p class="text-gray-600 mb-6">
           Descubre los libros que hemos estado leyendo en nuestras reuniones
           recientes y sumérgete en las historias que nos han cautivado.
         </p>
-        <!-- <button
-          class="px-6 py-3 bg-black text-white rounded-full hover:bg-gray-800 transition-colors"
-        >
-          Start reading
-        </button> -->
       </div>
 
-      {/* Featured book section */}
-      <!-- <div class="mb-8 flex items-start">
-        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
-          <img
-            src="/api/placeholder/48/48"
-            alt="Author"
-            class="w-full h-full object-cover"
-          />
-        </div>
-        <div>
-          <div class="flex items-center mb-2">
-            <h2 class="font-bold mr-2">George RR Martin</h2>
-            <span class="text-gray-500 text-sm">author</span>
-          </div>
-          <p class="text-gray-600 italic">
-            "Fire and Blood" tells the story of the Targaryen dynasty in
-            Westeros, chronicling the conquest of the Seven Kingdoms by House
-            Targaryen. It also covers the Targaryen civil war known as the Dance
-            of the Dragons.
-          </p>
-        </div>
-      </div> -->
-
-      {/* Book collection */}
       <div class="relative">
-        <div class="flex gap-6 mb-4">
+        <!-- <div class="flex gap-6 mb-4">
           {books.map((book) => <BookCard book={book} className="h-64 w-40" />)}
         </div>
 
-        {/* Footer info */}
         <div class="mt-8 flex justify-between items-center text-sm">
           <p class="text-gray-600">
             Got chance to check out the <span class="text-red-500"
@@ -66,7 +36,8 @@ const { books } = Astro.props;
             miss out!
           </p>
           <p class="text-gray-600">04 / 60 books</p>
-        </div>
+        </div> -->
+        <Carousel books={books} client:only />
       </div>
     </div>
   </div>

@@ -11,9 +11,9 @@ interface Props {
 }
 const { book } = Astro.props;
 
-const { phrase, author } = (
-  await axios.get("https://frasedeldia.azurewebsites.net/api/phrase")
-).data;
+// const { phrase, author } = (
+//   await axios.get("https://frasedeldia.azurewebsites.net/api/phrase")
+// ).data;
 ---
 
 <section>
@@ -39,7 +39,7 @@ const { phrase, author } = (
         >
         </lord-icon>
         <div class="text-lg font-semibold">Próxima reunión</div>
-        <div class="text-base">Viernes, 18:00</div>
+        <div class="text-base">Viernes, 12:30 p.m.</div>
       </div>
 
       <!-- Frase del día -->
@@ -47,9 +47,11 @@ const { phrase, author } = (
         <!-- Contenido de la cita -->
         <div>
           <p class="text-lg font-semibold text-gray-900">
-            "{phrase}"
+            <!-- "{phrase}" -->
+            frase
           </p>
-          <p class="mt-2 text-gray-500">- {author}</p>
+          <!-- <p class="mt-2 text-gray-500">- {author}</p> -->
+          <p class="mt-2 text-gray-500">- autor</p>
         </div>
       </div>
 

@@ -27,20 +27,23 @@ const { book } = Astro.props;
         </div>
       </div>
 
-      <div class="w-16 h-1 bg-primary"></div>
+      <div class="w-16 h-1 bg-primaryTheme"></div>
 
       <p class="text-xs text-gray-700 leading-relaxed text-pretty">
         {book.data.description}
       </p>
-      <button
-        class="mt-6 px-4 py-3 text-sm bg-primary text-white rounded-lg transition-all duration-300 hover:bg-blue-600 hover:shadow-lg"
-      >
-        Leer más
-      </button>
+      <a href={`libros/${book.slug}`}>
+        <button
+          class="mt-6 px-4 py-3 text-sm bg-primaryTheme text-white rounded-lg transition-all duration-300 hover:bg-blue-600 hover:shadow-lg"
+        >
+          Leer más
+        </button>
+      </a>
     </div>
     <div class="block md:hidden">
       <button
-        class="px-4 py-3 text-sm bg-primary text-white rounded-lg transition-all duration-300 hover:bg-blue-600 hover:shadow-lg"
+        onclick="window.location.href = '/libros/' + book.slug"
+        class="px-4 py-3 text-sm bg-primaryTheme text-white rounded-lg transition-all duration-300 hover:bg-blue-600 hover:shadow-lg"
       >
         Leer más
       </button>
