@@ -1,4 +1,4 @@
-import { addComment } from "@/hooks/useComments";
+import { addComment, updateLikesDislikes } from "@/hooks/useComments";
 import type { Comment } from "@/interfaces/comment.interface";
 import { getRelativeTime } from "@/utils/functions";
 import { ThumbsDown, ThumbsUp } from "lucide-react";
@@ -13,20 +13,16 @@ export default function CommentCard({
   bookId: number;
   parentsId?: string[];
 }) {
-  const likesCount = Object.values(comment.likes).filter(Boolean).length;
-  const dislikesCount = Object.values(comment.dislikes).filter(Boolean).length;
+  const userId = localStorage.getItem("userId") ?? "";
+
+  const likes = Object.entries(comment.likes);
+  const likesCount = likes.filter(([, value]) => value).length;
+  const dislikes = Object.entries(comment.dislikes);
+  const dislikesCount = dislikes.filter(([, value]) => value).length;
 
   const [isReplying, setIsReplying] = useState(false);
   const [replyContent, setReplyContent] = useState("");
-  const [localLikes, setLocalLikes] = useState(likesCount);
-  const [localDislikes, setLocalDislikes] = useState(dislikesCount);
-  const [subComments, setSubComments] = useState<Comment[]>([]);
-
-  useEffect(() => {
-    if (comment.comments) {
-      setSubComments(Object.values(comment.comments));
-    }
-  }, [comment.comments]);
+  const subComments = comment.comments ? Object.values(comment.comments) : [];
 
   const handleReply = () => {
     if (replyContent.trim()) {
@@ -39,7 +35,6 @@ export default function CommentCard({
         userName: localStorage.getItem("userName") ?? "User",
         userAvatar: localStorage.getItem("userAvatar") ?? "",
       };
-      setSubComments((prevComments) => [...prevComments, newSubcomment]);
 
       addComment(bookId.toString(), newSubcomment, [
         ...parentsId,
@@ -50,12 +45,10 @@ export default function CommentCard({
     }
   };
 
-  const handleLike = () => {
-    setLocalLikes((prevLikes) => prevLikes + 1);
-  };
-
-  const handleDislike = () => {
-    setLocalDislikes((prevDislikes) => prevDislikes + 1);
+  const handleLike = (isLike = true) => {
+    updateLikesDislikes(bookId.toString(), comment.id, userId, isLike, [
+      ...parentsId,
+    ]);
   };
 
   return (
@@ -83,21 +76,29 @@ export default function CommentCard({
               {isReplying ? "Cancelar" : "Responder"}
             </button>
             <button
-              onClick={handleLike}
-              className="flex items-center text-sm text-gray-500 hover:text-blue-500 transition-colors duration-200"
+              onClick={() => handleLike()}
+              className={`flex items-center text-sm transition-colors duration-200 ${
+                likes.find(([key]) => key === userId)
+                  ? "text-blue-500"
+                  : "text-gray-500 hover:text-blue-500"
+              }`}
             >
               <ThumbsUp className="w-4 h-4 mr-1" />
               <span className="transition-transform duration-200 hover:scale-110">
-                {localLikes}
+                {likesCount}
               </span>
             </button>
             <button
-              onClick={handleDislike}
-              className="flex items-center text-sm text-gray-500 hover:text-red-500 transition-colors duration-200"
+              onClick={() => handleLike(false)}
+              className={`flex items-center text-sm transition-colors duration-200 ${
+                dislikes.find(([key]) => key === userId)
+                  ? "text-red-500"
+                  : "text-gray-500 hover:text-red-500"
+              }`}
             >
               <ThumbsDown className="w-4 h-4 mr-1" />
               <span className="transition-transform duration-200 hover:scale-110">
-                {localDislikes}
+                {dislikesCount}
               </span>
             </button>
           </div>
