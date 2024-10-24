@@ -3,6 +3,7 @@ import type { Comment } from "@/interfaces/comment.interface";
 import { getRelativeTime } from "@/utils/functions";
 import { ThumbsDown, ThumbsUp } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import LoginModal from "./LoginModal";
 
 export default function CommentCard({
   comment,
@@ -15,6 +16,8 @@ export default function CommentCard({
 }) {
   const userId = localStorage.getItem("userId") ?? "";
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const likes = Object.entries(comment.likes);
   const likesCount = likes.filter(([, value]) => value).length;
   const dislikes = Object.entries(comment.dislikes);
@@ -25,6 +28,10 @@ export default function CommentCard({
   const subComments = comment.comments ? Object.values(comment.comments) : [];
 
   const handleReply = () => {
+    if (!userId) {
+      setIsModalOpen(true);
+      return;
+    }
     if (replyContent.trim()) {
       const newSubcomment = {
         id: "",
@@ -132,6 +139,13 @@ export default function CommentCard({
           ))}
         </div>
       )}
+      <LoginModal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+        }}
+        action="responder"
+      />
     </div>
   );
 }

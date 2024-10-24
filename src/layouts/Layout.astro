@@ -3,6 +3,7 @@ import Meta from "@components/Meta.astro";
 import { SITE } from "@data/constants";
 import "../styles/fonts.css";
 import "../styles/global.css";
+import { Toaster } from "@/components/ui/shadcn/Toaster";
 
 const {
   title = SITE.title,
@@ -29,6 +30,7 @@ interface Props {
     <main aria-label="Main content">
       <slot />
     </main>
+    <Toaster client:load />
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
   </body>
 </html>

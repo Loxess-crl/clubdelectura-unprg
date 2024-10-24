@@ -1,7 +1,6 @@
 ---
 import CommentSection from "@/components/CommentSection";
-import CommentCard from "@/components/ui/Comment";
-import type { Comment } from "@/interfaces/comment.interface";
+import { DownloadButton } from "@/components/ui/DownloadButton";
 import Layout from "@/layouts/Layout.astro";
 import Image from "astro/components/Image.astro";
 import { getCollection } from "astro:content";
@@ -66,11 +65,7 @@ const pageTitle = `${book.data.title} | Club de Lectura`;
             <a
               href={`https://drive.google.com/uc?export=download&id=${book.data.id}`}
             >
-              <button
-                class="px-6 sm:px-8 py-2 sm:py-3 bg-black text-white rounded-full hover:bg-gray-800 transition-colors text-sm sm:text-base"
-              >
-                Descargar
-              </button>
+              <DownloadButton client:load />
             </a>
           </div>
 
