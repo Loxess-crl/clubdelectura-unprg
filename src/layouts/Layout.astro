@@ -5,6 +5,7 @@ import "../styles/fonts.css";
 import "../styles/global.css";
 import { Toaster } from "@/components/ui/shadcn/Toaster";
 import Navbar from "@/components/ui/Navbar";
+import Header from "@/components/Header.astro";
 
 const {
   title = SITE.title,
@@ -28,6 +29,7 @@ interface Props {
     <title>{title}</title>
   </head>
   <body>
+    <Header />
     <main aria-label="Main content">
       <slot />
     </main>
