@@ -19,6 +19,7 @@
       "@locales/*": ["src/locales/*"]
     },
     "jsx": "react-jsx",
-    "jsxImportSource": "react"
+    "jsxImportSource": "react",
+    "types": ["astro/client"]
   }
 }

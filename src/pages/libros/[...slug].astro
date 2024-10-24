@@ -1,6 +1,7 @@
 ---
 import CommentSection from "@/components/CommentSection";
 import { DownloadButton } from "@/components/ui/DownloadButton";
+import Navbar from "@/components/ui/Navbar";
 import Layout from "@/layouts/Layout.astro";
 import Image from "astro/components/Image.astro";
 import { getCollection } from "astro:content";
@@ -16,9 +17,11 @@ export async function getStaticPaths() {
 const { book } = Astro.props;
 
 const pageTitle = `${book.data.title} | Club de Lectura`;
+const currentPath = Astro.url.pathname;
 ---
 
 <Layout title={pageTitle}>
+  <Navbar client:only currentPath={currentPath} />
   <section>
     <div
       class="min-h-screen bg-[#F5F5F0] p-4 sm:p-8 flex items-center justify-center"

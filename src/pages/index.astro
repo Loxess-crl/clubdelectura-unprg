@@ -8,7 +8,7 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import FeaturedBooks from "@/components/FeaturedBooks.astro";
 import Navbar from "@/components/ui/Navbar";
 
-const books: CollectionEntry<"books">[] = await getCollection("books");
+const books = await getCollection("books");
 
 const lastBook = books.sort((a, b) => {
   return b.data.week - a.data.week;

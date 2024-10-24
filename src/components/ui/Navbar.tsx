@@ -52,11 +52,11 @@ const Navbar = ({ currentPath }: { currentPath: string }) => {
   const userAvatarFallback = userName[0];
 
   return (
-    <div className="fixed right-0 top-0 z-50 flex h-full">
+    <div className="fixed right-0 top-0 z-50 flex h-full translate-x-full">
       <div
         className={`
           bg-slate-50 p-4 shadow-lg transform transition-transform duration-300 ease-in-out
-          ${isOpen ? "translate-x-0" : "translate-x-full"}
+          ${isOpen ? "-translate-x-full" : "translate-x-0"}
           w-80 h-full overflow-y-auto rounded-l-lg
         `}
       >
@@ -123,7 +123,7 @@ const Navbar = ({ currentPath }: { currentPath: string }) => {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`
-          absolute top-1/2 -right-12
+          absolute top-1/4 right-[calc(100% - 2rem)]
           flex items-center justify-center
           w-10 h-12 
           bg-blue-600
@@ -139,7 +139,7 @@ const Navbar = ({ currentPath }: { currentPath: string }) => {
           focus:outline-none
           group
         `}
-        title="Abrir cajón de bloques"
+        title="Abrir navbar"
       >
         {isOpen ? (
           <ChevronRight className="w-6 h-6 transform transition-transform duration-300 group-hover:scale-110 group-hover:-translate-x-1" />

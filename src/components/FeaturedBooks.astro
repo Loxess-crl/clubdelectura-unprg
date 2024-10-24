@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import Carousel from "./FeaturedBooks";
+import BooksCarousel from "./BooksCarousel";
 import BookImage from "./ui/BookImage.astro";
 import BookCard from "./ui/BookCard.astro";
 
@@ -12,7 +12,6 @@ const { books } = Astro.props;
 ---
 
 <section>
-  <!-- https://www.youtube.com/watch?v=hfGz5AgHT-E -->
   <div class="min-h-screen bg-surface md:p-8 py-8">
     <div class="w-full md:max-w-6xl mx-auto bg-white rounded-3xl p-12">
       <div class="mb-12">
@@ -24,20 +23,7 @@ const { books } = Astro.props;
       </div>
 
       <div class="relative">
-        <!-- <div class="flex gap-6 mb-4">
-          {books.map((book) => <BookCard book={book} className="h-64 w-40" />)}
-        </div>
-
-        <div class="mt-8 flex justify-between items-center text-sm">
-          <p class="text-gray-600">
-            Got chance to check out the <span class="text-red-500"
-              >new collection</span
-            > of Harry Potter? It's a must-read for any fan of the series, don't
-            miss out!
-          </p>
-          <p class="text-gray-600">04 / 60 books</p>
-        </div> -->
-        <Carousel books={books} client:only />
+        <BooksCarousel books={books} client:only />
       </div>
     </div>
   </div>
