@@ -34,6 +34,7 @@ const LoginModal = ({
         localStorage.setItem("userName", user.displayName || "");
         localStorage.setItem("userAvatar", user.photoURL || "");
         localStorage.setItem("userId", user.uid);
+        localStorage.setItem("userEmail", user.email || "");
         setIsLoggedId(user.uid);
       })
       .catch((error) => {

@@ -4,6 +4,7 @@ import { getRelativeTime } from "@/utils/functions";
 import { ThumbsDown, ThumbsUp } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import LoginModal from "./LoginModal";
+import { Avatar, AvatarFallback, AvatarImage } from "./shadcn/Avatar";
 
 export default function CommentCard({
   comment,
@@ -61,12 +62,10 @@ export default function CommentCard({
   return (
     <div className="mb-4 animate-fadeInComment">
       <div className="flex items-start space-x-3">
-        <img
-          src={comment.userAvatar}
-          alt={comment.userName}
-          className="w-10 h-10 rounded-full object-cover"
-          referrerPolicy="no-referrer"
-        />
+        <Avatar className="h-10 w-10">
+          <AvatarImage src={comment.userAvatar} alt={comment.userName} />
+          <AvatarFallback>{comment.userName[0]}</AvatarFallback>
+        </Avatar>
         <div className="flex-1">
           <div className="flex items-center space-x-2">
             <h4 className="font-semibold">{comment.userName}</h4>

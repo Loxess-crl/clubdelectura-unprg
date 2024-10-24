@@ -1,7 +1,6 @@
-import { database } from "@/firebase/cient";
+import { database } from "@/firebase/client";
 import type { Comment } from "@/interfaces/comment.interface";
-import firebase from "firebase/compat/app";
-import { get, onValue, push, ref, update } from "firebase/database";
+import { get, onValue, ref, update } from "firebase/database";
 import { useEffect, useState } from "react";
 
 export const useComments = (bookId: number) => {
@@ -34,8 +33,6 @@ const getCommentRef = (
   });
 
   commentRefString += `/${commentId}`;
-
-  console.log("commentRefString", commentRefString);
 
   return ref(database, commentRefString);
 };

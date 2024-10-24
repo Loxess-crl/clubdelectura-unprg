@@ -1,21 +1,25 @@
 ---
 import Hero from "@/components/Hero.astro";
 import ClubInformation from "@/components/ClubInformation.astro";
-import Navbar from "@/components/Navbar.astro";
+import Header from "@/components/Header.astro";
 import Layout from "@layouts/Layout.astro";
 
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import FeaturedBooks from "@/components/FeaturedBooks.astro";
+import Navbar from "@/components/ui/Navbar";
 
-const books = await getCollection("books");
+const books: CollectionEntry<"books">[] = await getCollection("books");
 
 const lastBook = books.sort((a, b) => {
   return b.data.week - a.data.week;
 })[0];
+
+const currentPath = Astro.url.pathname;
 ---
 
 <Layout title="Club de Lectura - UNPRG" lang="es-PE">
-  <Navbar />
+  <Navbar client:only currentPath={currentPath} />
+  <Header />
   <Hero />
   <ClubInformation book={lastBook} />
   <FeaturedBooks books={books} />
