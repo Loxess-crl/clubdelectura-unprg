@@ -1,0 +1,16 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import AllBooks from "@/components/AllBooks";
+import BookMainHero from "@/components/BookMainHero";
+
+const books = await getCollection("books");
+---
+
+<Layout title="Libros - Club de Lectura" lang="es-PE">
+  <div class="max-w-7xl mx-auto px-4 py-8">
+    <BookMainHero books={books} client:load />
+
+    <AllBooks books={books} client:load />
+  </div>
+</Layout>

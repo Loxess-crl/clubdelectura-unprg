@@ -23,7 +23,7 @@ const BooksCarousel = ({ books }: { books: CollectionEntry<"books">[] }) => {
             <div className="p-1">
               <Card>
                 <a href={"libros/" + book.slug}>
-                  <CardContent className="flex flex-col items-center p-6">
+                  <CardContent className="flex flex-col items-center p-6 hover:scale-105 transition-transform duration-300">
                     <p className="text-sm text-muted-foreground text-center mb-2">
                       Semana {book.data.week}
                     </p>

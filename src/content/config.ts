@@ -11,6 +11,12 @@ const bookCollection = defineCollection({
       pubyear: z.number(),
       bookImage: image(),
       week: z.number(),
+      ratings: z
+        .object({
+          average: z.number().default(0), // Puntuación promedio
+          votes: z.record(z.string(), z.number()).optional(), // userId: rating
+        })
+        .optional(),
     }),
 });
 

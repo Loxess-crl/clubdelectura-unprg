@@ -11,11 +11,15 @@ const banner = await import("@assets/images/icon.png");
   <div
     class="flex items-center justify-center w-full p-4 bg-white/80 shadow-md md:justify-between rounded-lg"
   >
-    <div
-      class="flex items-center justify-center w-full md:w-auto md:justify-between"
-    >
-      <Image class="size-9" src={banner.default} alt="Logo Club de Lectura" />
-      <h1 class="text-4xl font-allura text-slate-900 ml-2">Club de Lectura</h1>
-    </div>
+    <a href="/">
+      <div
+        class="flex items-center justify-center w-full md:w-auto md:justify-between"
+      >
+        <Image class="size-9" src={banner.default} alt="Logo Club de Lectura" />
+        <h1 class="text-4xl font-allura text-slate-900 ml-2">
+          Club de Lectura
+        </h1>
+      </div>
+    </a>
   </div>
 </header>

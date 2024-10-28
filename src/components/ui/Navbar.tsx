@@ -103,7 +103,7 @@ const Navbar = ({ currentPath }: { currentPath: string }) => {
             Inicio
           </SidebarButton>
           <SidebarButton
-            href="/libros/el_corazon_delator"
+            href="/libros"
             isActive={currentPath.includes("/libros")}
             icon={<Book className="h-5 w-5" />}
           >

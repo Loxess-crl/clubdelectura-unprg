@@ -20,6 +20,7 @@ interface Props {
   structuredData?: object;
   lang?: string;
 }
+const currentPath = Astro.url.pathname;
 ---
 
 <!doctype html>
@@ -29,6 +30,7 @@ interface Props {
     <title>{title}</title>
   </head>
   <body>
+    <Navbar client:only currentPath={currentPath} />
     <Header />
     <main aria-label="Main content">
       <slot />
