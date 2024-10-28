@@ -1,34 +1,8 @@
 ---
 import { Image } from "astro:assets";
+import HeroSection from "./HeroSection";
 
 const banner_unprg = await import("@assets/images/unprg_banner.jpg");
 ---
 
-<section>
-  <div class="min-h-[80vh] p-4 my-8 flex flex-col justify-center">
-    <!-- Background maybe will be this https://www.youtube.com/watch?v=fDSd2fudits -->
-    <div
-      class="animate-fadeIn flex flex-col justify-center items-center md:flex-row"
-    >
-      <Image class="h-80 w-96" src={banner_unprg.default} alt="UNPRG" />
-      <div
-        class="p-4 flex flex-col justify-center items-center border-4 h-56 border-black z-10 -translate-y-24 md:-translate-x-24 md:-translate-y-0 bg-white"
-      >
-        <h1 class="text-5xl font-allura font-bold">Club de Lectura</h1>
-        <p class="text-2xl font-edu pt-2">de la UNPRG</p>
-      </div>
-    </div>
-    <div
-      class="animate-up flex justify-center items-center text-center -mt-10 md:mt-8"
-    >
-      <div class="md:w-1/2 w-full md:p-0 px-4">
-        <p class="font-bold md:text-lg text-pretty text-base">
-          Únete al club de lectura de la UNPRG, donde cada semana nos reunimos
-          para explorar libros fascinantes, compartir ideas y disfrutar de un
-          espacio de aprendizaje y crecimiento. ¡Ven y sé parte de una comunidad
-          apasionada por la lectura!
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
+<HeroSection client:load />

@@ -7,16 +7,14 @@ import { links } from "@/data/constants";
 const BookClubHero = ({ books }: { books: CollectionEntry<"books">[] }) => {
   return (
     <section className="relative min-h-screen py-24 px-6 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
-      {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-full h-full opacity-40">
         <div className="absolute top-20 left-20 w-64 h-64 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
-        <div className="absolute top-40 right-20 w-64 h-64 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-20 left-1/2 w-64 h-64 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
+        <div className="absolute top-40 right-20 w-64 h-64 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl animate-blob delay-500"></div>
+        <div className="absolute bottom-20 left-1/2 w-64 h-64 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl animate-blob delay-1000"></div>
       </div>
 
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row items-center gap-16 relative">
-          {/* Text Content */}
           <div className="lg:w-1/3 z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}

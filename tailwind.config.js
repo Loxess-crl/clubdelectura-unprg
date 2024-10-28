@@ -12,8 +12,10 @@ export default {
     },
     extend: {
       colors: {
-        primaryTheme: "#90AACF",
-        surface: "#F5F5F0",
+        primaryTheme: "#4686c8",
+        alternateTheme: "#75b3a6",
+        secondaryTheme: "#ea9a12",
+        surface: "#f6f1ea",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -66,6 +68,7 @@ export default {
         slideDown: "slideDown 0.3s ease-out",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        blob: "blob 3s infinite",
       },
       keyframes: {
         fadeIn: {
@@ -107,6 +110,20 @@ export default {
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
+        },
+        blob: {
+          "0%": {
+            transform: "translate(0px, 0px) scale(1)",
+          },
+          "33%": {
+            transform: "translate(30px, -50px) scale(1.1)",
+          },
+          "66%": {
+            transform: "translate(-20px, 20px) scale(0.9)",
+          },
+          "100%": {
+            transform: "translate(0px, 0px) scale(1)",
+          },
         },
       },
     },

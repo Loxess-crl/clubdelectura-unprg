@@ -1,10 +1,10 @@
 ---
-import Hero from "@/components/Hero.astro";
 import ClubInformation from "@/components/ClubInformation.astro";
 import Layout from "@layouts/Layout.astro";
 
 import { getCollection } from "astro:content";
 import FeaturedBooks from "@/components/FeaturedBooks.astro";
+import HeroSection from "@/components/HeroSection";
 
 const books = await getCollection("books");
 
@@ -14,7 +14,7 @@ const lastBook = books.sort((a, b) => {
 ---
 
 <Layout title="Club de Lectura - UNPRG" lang="es-PE">
-  <Hero />
+  <HeroSection client:load />
   <ClubInformation book={lastBook} />
   <FeaturedBooks books={books} />
 </Layout>
