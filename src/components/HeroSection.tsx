@@ -5,7 +5,7 @@ import logo from "@assets/images/icon.png";
 
 const HeroSection = () => {
   return (
-    <section className="min-h-screen relative overflow-hidden bg-surface px-6 pt-20">
+    <section className="min-h-screen relative overflow-hidden bg-bgTheme px-6 pt-20">
       {/* Fondo decorativo */}
       <div className="absolute inset-0 bg-gradient-to-b from-purple-50 to-transparent" />
 
@@ -87,7 +87,7 @@ const HeroSection = () => {
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="bg-alternateTheme hover:bg-primaryTheme text-white px-8 py-4 rounded-xl font-medium flex items-center gap-2 shadow-lg shadow-purple-200 transition-colors"
+                className="bg-accentTheme hover:bg-primaryTheme text-white px-8 py-4 rounded-xl font-medium flex items-center gap-2 shadow-lg shadow-purple-200 transition-colors"
               >
                 Únete ahora
                 <ArrowRight className="w-5 h-5" />

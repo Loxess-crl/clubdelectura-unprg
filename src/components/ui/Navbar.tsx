@@ -1,22 +1,26 @@
 import React, { useState, type ReactNode } from "react";
+import { motion } from "framer-motion";
 import {
-  ChevronLeft,
-  ChevronRight,
-  Home,
-  ChevronDown,
   Book,
+  Home,
   User,
+  ChevronRight,
+  ChevronLeft,
+  BookOpen,
+  Settings,
 } from "lucide-react";
-import { Button } from "./shadcn/Button";
-import { Avatar, AvatarFallback, AvatarImage } from "./shadcn/Avatar";
-import { cn } from "@/lib/utils";
-import { app } from "@/firebase/client";
+import {
+  Avatar,
+  AvatarImage,
+  AvatarFallback,
+} from "@/components/ui/shadcn/Avatar";
+import { Button } from "@/components/ui/shadcn/Button";
 import LoginModal from "./LoginModal";
 
 interface SidebarButtonProps {
   href: string;
   isActive: boolean;
-  icon: ReactNode;
+  icon: any;
   children: ReactNode;
 }
 
@@ -27,126 +31,179 @@ const SidebarButton = ({
   children,
 }: SidebarButtonProps) => {
   return (
-    <a
+    <motion.a
       href={href}
-      className={cn(
-        "flex items-center space-x-3 p-2 rounded-lg transition-colors transform duration-300 ease-in-out",
-        isActive
-          ? "bg-gray-900 text-white hover:bg-gray-700"
-          : " text-gray-500 hover:bg-gray-200"
-      )}
+      className={`
+        flex items-center gap-4 px-6 py-4 
+        rounded-xl transition-all duration-500
+        group relative overflow-hidden
+        ${isActive ? "text-primaryTheme bg-accentTheme/10" : "text-gray-600 hover:text-primaryTheme"}
+      `}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
     >
-      {icon}
-      <span>{children}</span>
-    </a>
+      <div className="relative z-10 flex items-center gap-4">
+        {React.cloneElement(icon, {
+          className: `w-5 h-5 transition-transform duration-500 
+            ${isActive ? "text-primaryTheme" : "text-gray-600 group-hover:text-primaryTheme"}`,
+        })}
+        <span className="font-medium">{children}</span>
+      </div>
+      {isActive && (
+        <motion.div
+          className="absolute inset-0 bg-accentTheme/5"
+          layoutId="activeTab"
+          initial={false}
+          transition={{
+            type: "spring",
+            stiffness: 500,
+            damping: 35,
+          }}
+        />
+      )}
+    </motion.a>
   );
 };
+
+const QuoteCard = () => (
+  <div className="px-6 py-4 mt-6 bg-bgTheme rounded-2xl border border-surfaceTheme/30">
+    <BookOpen className="w-8 h-8 text-secondaryTheme mb-3" />
+    <p className="text-sm text-slate-800 italic">
+      "Los libros son espejos: sólo ves en ellos lo que ya llevas dentro."
+    </p>
+    <p className="text-xs text-slate-700 mt-2">- Carlos Ruiz Zafón</p>
+  </div>
+);
 
 const Navbar = ({ currentPath }: { currentPath: string }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isUserLoggedIn = localStorage.getItem("userId") !== null;
-  const userName = localStorage.getItem("userName") ?? "User";
+  const userName = localStorage.getItem("userName") ?? "Lector";
   const userEmail = localStorage.getItem("userEmail") ?? "";
   const userAvatar = localStorage.getItem("userAvatar") ?? "";
   const userAvatarFallback = userName[0];
 
   return (
-    <div className="fixed right-0 top-0 z-50 flex h-full translate-x-full">
-      <div
+    <motion.div
+      className="fixed right-0 top-0 h-full z-50 flex"
+      animate={{ x: isOpen ? 0 : 320 }}
+      transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
+    >
+      <motion.button
+        onClick={() => setIsOpen(true)}
         className={`
-          bg-slate-50 p-4 shadow-lg transform transition-transform duration-300 ease-in-out
-          ${isOpen ? "-translate-x-full" : "translate-x-0"}
-          w-80 h-full overflow-y-auto rounded-l-lg
-        `}
-      >
-        <div className="flex items-center justify-between p-2 bg-white rounded-lg mb-6 shadow-sm border">
-          {isUserLoggedIn ? (
-            <>
-              <div className="flex items-center space-x-3">
-                <Avatar className="h-10 w-10">
-                  <AvatarImage src={userAvatar} alt={userName} />
-                  <AvatarFallback>{userAvatarFallback}</AvatarFallback>
-                </Avatar>
-
-                <div className="text-left">
-                  <p className="text-sm font-semibold">{userName}</p>
-                  <p className="text-xs text-gray-500">{userEmail}</p>
-                </div>
-              </div>
-
-              <Button variant="ghost" size="icon">
-                <ChevronDown className="h-4 w-4" />
-              </Button>
-            </>
-          ) : (
-            <>
-              <div className="flex justify-center items-center w-full p-3 rounded-lg bg-gray-100 text-gray-500 hover:bg-gray-200">
-                <button
-                  className="text-sm font-medium"
-                  onClick={() => setIsModalOpen(true)}
-                >
-                  Iniciar sesión
-                </button>
-              </div>
-            </>
-          )}
-        </div>
-
-        {/* Menú de navegación */}
-        <nav className="space-y-2">
-          <SidebarButton
-            href="/"
-            isActive={currentPath === "/"}
-            icon={<Home className="h-5 w-5" />}
-          >
-            Inicio
-          </SidebarButton>
-          <SidebarButton
-            href="/libros"
-            isActive={currentPath.includes("/libros")}
-            icon={<Book className="h-5 w-5" />}
-          >
-            Libros
-          </SidebarButton>
-          <SidebarButton
-            href="/perfil"
-            isActive={currentPath === "/perfil"}
-            icon={<User className="h-5 w-5" />}
-          >
-            Perfil
-          </SidebarButton>
-        </nav>
-      </div>
-
-      {/* Botón flotante */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`
-          absolute top-1/4 right-[calc(100% - 2rem)]
+          absolute right-full top-32
+          w-12 h-12
           flex items-center justify-center
-          w-10 h-12 
-          bg-blue-600
-          text-white
-          rounded-l-lg
-          shadow-lg
-          transform -translate-x-full
-          transition-all duration-300 ease-in-out
-          hover:w-12 hover:bg-blue-700
-          hover:shadow-xl
-          hover:scale-105
-          active:scale-95
-          focus:outline-none
-          group
+          bg-bgTheme rounded-l-xl
+          shadow-lg border border-r-0 border-surfaceTheme
+          text-surfaceTheme hover:text-primaryTheme
+          transition-colors
         `}
-        title="Abrir navbar"
+        initial={false}
+        animate={{ opacity: isOpen ? 0 : 1 }}
       >
-        {isOpen ? (
-          <ChevronRight className="w-6 h-6 transform transition-transform duration-300 group-hover:scale-110 group-hover:-translate-x-1" />
-        ) : (
-          <ChevronLeft className="w-6 h-6 transform transition-transform duration-300 group-hover:scale-110 group-hover:translate-x-1" />
-        )}
-      </button>
+        <ChevronLeft className="w-5 h-5" />
+      </motion.button>
+
+      <div className="w-80 h-full bg-bgTheme border-l border-surfaceTheme shadow-xl relative overflow-hidden">
+        <div className="h-full flex flex-col">
+          {/* Header */}
+          <div className="px-6 py-8">
+            <div className="flex items-center justify-between mb-8">
+              <motion.div
+                className="text-xl font-semibold text-primaryTheme"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                Club de Literatura
+              </motion.div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsOpen(false)}
+                className="text-surfaceTheme hover:text-primaryTheme"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </Button>
+            </div>
+
+            {/* User Profile */}
+            {isUserLoggedIn ? (
+              <motion.div
+                className="flex items-center gap-4 p-4 bg-bgTheme rounded-2xl border border-surfaceTheme max-w-full"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                <Avatar className="h-12 w-12 ring-2 ring-bgTheme">
+                  <AvatarImage src={userAvatar} alt={userName} />
+                  <AvatarFallback className="bg-secondaryTheme text-bgTheme">
+                    {userAvatarFallback}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="min-w-0">
+                  <p className="font-medium text-brownTheme break-words">
+                    {userName}
+                  </p>
+                  <p className="text-sm text-gray-800 break-words">
+                    {userEmail}
+                  </p>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.button
+                className="w-full p-4 text-center bg-primaryTheme text-bgTheme rounded-xl font-medium hover:shadow-lg transition-shadow"
+                onClick={() => setIsModalOpen(true)}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Iniciar sesión
+              </motion.button>
+            )}
+          </div>
+
+          {/* Navigation */}
+          <nav className="flex-1 space-y-2 py-4">
+            <SidebarButton
+              href="/"
+              isActive={currentPath === "/"}
+              icon={<Home />}
+            >
+              Inicio
+            </SidebarButton>
+            <SidebarButton
+              href="/libros"
+              isActive={currentPath.includes("/libros")}
+              icon={<Book />}
+            >
+              Biblioteca
+            </SidebarButton>
+            <SidebarButton
+              href="/perfil"
+              isActive={currentPath === "/perfil"}
+              icon={<User />}
+            >
+              Mi Perfil
+            </SidebarButton>
+          </nav>
+
+          <QuoteCard />
+
+          <div className="p-6 border-t border-surfaceTheme/30">
+            <Button
+              variant="ghost"
+              className="w-full flex items-center justify-center gap-2 text-surfaceTheme hover:text-primaryTheme"
+              onClick={() => {}}
+            >
+              <Settings className="w-4 h-4" />
+              <span>Configuración</span>
+            </Button>
+          </div>
+        </div>
+      </div>
       <LoginModal
         isOpen={isModalOpen}
         onClose={() => {
@@ -154,7 +211,7 @@ const Navbar = ({ currentPath }: { currentPath: string }) => {
         }}
         action="interactuar con la comunidad"
       />
-    </div>
+    </motion.div>
   );
 };
 

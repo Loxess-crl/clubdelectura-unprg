@@ -13,9 +13,12 @@ export default {
     extend: {
       colors: {
         primaryTheme: "#4686c8",
-        alternateTheme: "#75b3a6",
         secondaryTheme: "#ea9a12",
-        surface: "#f6f1ea",
+        accentTheme: "#75b3a6",
+        bgTheme: "#f6f1ea",
+        surfaceTheme: "#b9bba3",
+        alternativeTheme: "#b5ca8d",
+        brownTheme: "#66503b",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

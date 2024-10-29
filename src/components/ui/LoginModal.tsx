@@ -10,6 +10,8 @@ import { Button } from "./shadcn/Button";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useState } from "react";
 import { Loader2Icon } from "lucide-react";
+import { app } from "@/firebase/client";
+app;
 
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
