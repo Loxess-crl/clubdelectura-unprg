@@ -37,7 +37,7 @@ const SidebarButton = ({
         flex items-center gap-4 px-6 py-4 
         rounded-xl transition-all duration-500
         group relative overflow-hidden
-        ${isActive ? "text-primaryTheme bg-accentTheme/10" : "text-gray-600 hover:text-primaryTheme"}
+        ${isActive ? "text-primaryTheme bg-accentTheme/10" : "text-slate-600 hover:text-primaryTheme"}
       `}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
@@ -124,7 +124,7 @@ const Navbar = ({ currentPath }: { currentPath: string }) => {
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsOpen(false)}
-                className="text-surfaceTheme hover:text-primaryTheme"
+                className="text-slate-700 hover:text-primaryTheme"
               >
                 <ChevronRight className="w-5 h-5" />
               </Button>

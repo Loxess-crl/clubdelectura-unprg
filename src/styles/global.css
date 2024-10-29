@@ -95,5 +95,5 @@ a.link-underline {
 }
 
 .card {
-  @apply bg-bgTheme/70 rounded-lg shadow-md p-4 hover:scale-[1.015] transition-transform;
+  @apply bg-bgTheme/95 rounded-lg shadow-md p-4 hover:scale-[1.015] transition-transform;
 }

@@ -12,19 +12,19 @@ export default function TopBooks({
     books.slice(0, 3)
   );
 
-  useEffect(() => {
-    const fetchTopBooks = async () => {
-      const featuredBooks = await getTopRatedBooks();
+  // useEffect(() => {
+  //   const fetchTopBooks = async () => {
+  //     const featuredBooks = await getTopRatedBooks();
 
-      const topBooks = books.filter((book) =>
-        featuredBooks.some((b) => b.id == book.data.week)
-      );
+  //     const topBooks = books.filter((book) =>
+  //       featuredBooks.some((b) => b.id == book.data.week)
+  //     );
 
-      setTopBooks(topBooks);
-    };
+  //     setTopBooks(topBooks);
+  //   };
 
-    fetchTopBooks();
-  }, []);
+  //   fetchTopBooks();
+  // }, []);
   return (
     <div className="lg:w-2/3">
       <div className="flex gap-6 justify-end">

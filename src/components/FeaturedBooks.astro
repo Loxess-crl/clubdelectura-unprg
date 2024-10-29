@@ -3,6 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import BooksCarousel from "./BooksCarousel";
 import BookImage from "./ui/BookImage.astro";
 import BookCard from "./ui/BookCard.astro";
+import { ArrowRight } from "lucide-react";
 
 interface Props {
   books: CollectionEntry<"books">[];
@@ -11,27 +12,27 @@ interface Props {
 const { books } = Astro.props;
 ---
 
-<section>
-  <div class="min-h-screen bg-bgTheme md:p-8 py-8">
-    <div class="w-full md:max-w-6xl mx-auto bg-white rounded-3xl p-12">
-      <div class="mb-12">
-        <h1 class="text-4xl font-bold mb-4">Lecturas Recientes</h1>
-        <p class="text-gray-600 mb-6">
-          Descubre los libros que hemos estado leyendo en nuestras reuniones
-          recientes y sumérgete en las historias que nos han cautivado.
-        </p>
-        <!-- Botón de ver todos los libros -->
-        <a
-          href="/libros"
-          class="inline-block px-6 py-2 bg-primary text-white font-semibold rounded-full shadow-md hover:shadow-lg transition-all duration-300"
-        >
-          Ver todos los libros
-        </a>
-      </div>
-
-      <div class="relative">
-        <BooksCarousel books={books} client:only />
-      </div>
+<section class="relative min-h-screen bg-white py-24">
+  <div class="relative w-full md:max-w-5xl mx-auto px-6">
+    <div class="text-center mb-20">
+      <h2 class="text-5xl font-extrabold text-primaryTheme mb-8 tracking-tight">
+        Lecturas Recientes
+      </h2>
+      <p class="text-gray-600 text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+        Descubre los libros que hemos estado leyendo en nuestras reuniones
+        recientes y sumérgete en las historias que nos han cautivado.
+      </p>
+      <a
+        href="/libros"
+        class="group inline-flex items-center gap-2 px-8 py-3 bg-primaryTheme text-white font-semibold rounded-full hover:bg-accentTheme transition-all duration-300"
+      >
+        Ver todos los libros
+        <ArrowRight
+          className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300"
+        />
+      </a>
     </div>
+
+    <BooksCarousel books={books} client:load />
   </div>
 </section>
