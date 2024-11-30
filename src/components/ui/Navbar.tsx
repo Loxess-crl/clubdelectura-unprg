@@ -8,6 +8,7 @@ import {
   ChevronLeft,
   BookOpen,
   Settings,
+  LogOut,
 } from "lucide-react";
 import {
   Avatar,
@@ -16,6 +17,12 @@ import {
 } from "@/components/ui/shadcn/Avatar";
 import { Button } from "@/components/ui/shadcn/Button";
 import LoginModal from "./LoginModal";
+import {
+  clearTotalLocalStorage,
+  getItemsFromLocalStorage,
+} from "@/hooks/localStorageService";
+import { LocalStorageKeys } from "@/data/constants";
+import type { User as IUser } from "@/interfaces/user.interface";
 
 interface SidebarButtonProps {
   href: string;
@@ -78,11 +85,13 @@ const QuoteCard = () => (
 const Navbar = ({ currentPath }: { currentPath: string }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const isUserLoggedIn = localStorage.getItem("userId") !== null;
-  const userName = localStorage.getItem("userName") ?? "Lector";
-  const userEmail = localStorage.getItem("userEmail") ?? "";
-  const userAvatar = localStorage.getItem("userAvatar") ?? "";
-  const userAvatarFallback = userName[0];
+  const user = getItemsFromLocalStorage<IUser>(LocalStorageKeys.user);
+  const userAvatarFallback = user?.displayName.charAt(0) ?? "U";
+
+  const onLogout = () => {
+    clearTotalLocalStorage();
+    window.location.reload();
+  };
 
   return (
     <motion.div
@@ -109,7 +118,6 @@ const Navbar = ({ currentPath }: { currentPath: string }) => {
 
       <div className="w-80 h-full bg-bgTheme border-l border-surfaceTheme shadow-xl relative overflow-hidden">
         <div className="h-full flex flex-col">
-          {/* Header */}
           <div className="px-6 py-8">
             <div className="flex items-center justify-between mb-8">
               <motion.div
@@ -130,8 +138,7 @@ const Navbar = ({ currentPath }: { currentPath: string }) => {
               </Button>
             </div>
 
-            {/* User Profile */}
-            {isUserLoggedIn ? (
+            {user ? (
               <motion.div
                 className="flex items-center gap-4 p-4 bg-bgTheme rounded-2xl border border-surfaceTheme max-w-full"
                 initial={{ opacity: 0, y: 20 }}
@@ -139,17 +146,17 @@ const Navbar = ({ currentPath }: { currentPath: string }) => {
                 transition={{ delay: 0.3 }}
               >
                 <Avatar className="h-12 w-12 ring-2 ring-bgTheme">
-                  <AvatarImage src={userAvatar} alt={userName} />
+                  <AvatarImage src={user.avatarUrl} alt={user.displayName} />
                   <AvatarFallback className="bg-secondaryTheme text-bgTheme">
                     {userAvatarFallback}
                   </AvatarFallback>
                 </Avatar>
                 <div className="min-w-0">
                   <p className="font-medium text-brownTheme break-words">
-                    {userName}
+                    {user.displayName}
                   </p>
                   <p className="text-sm text-gray-800 break-words">
-                    {userEmail}
+                    {user.email}
                   </p>
                 </div>
               </motion.div>
@@ -165,7 +172,6 @@ const Navbar = ({ currentPath }: { currentPath: string }) => {
             )}
           </div>
 
-          {/* Navigation */}
           <nav className="flex-1 space-y-2 py-4">
             <SidebarButton
               href="/"
@@ -181,6 +187,13 @@ const Navbar = ({ currentPath }: { currentPath: string }) => {
             >
               Biblioteca
             </SidebarButton>
+            <SidebarButton
+              href="/perfil"
+              isActive={currentPath.includes("/perfil")}
+              icon={<User />}
+            >
+              Perfil
+            </SidebarButton>
           </nav>
 
           <QuoteCard />
@@ -188,11 +201,11 @@ const Navbar = ({ currentPath }: { currentPath: string }) => {
           <div className="p-6 border-t border-surfaceTheme/30">
             <Button
               variant="ghost"
-              className="w-full flex items-center justify-center gap-2 text-surfaceTheme hover:text-primaryTheme"
-              onClick={() => {}}
+              className="w-full flex items-center justify-center gap-2 text-red-700 hover:text-primaryTheme"
+              onClick={onLogout}
             >
-              <Settings className="w-4 h-4" />
-              <span>Configuración</span>
+              <LogOut className="w-4 h-4" />
+              <span>Cerrar Sesión</span>
             </Button>
           </div>
         </div>

@@ -44,3 +44,7 @@ export const OG = {
 export const links = {
   whatsapp: "https://chat.whatsapp.com/DmsyPbaNT375TlnccC6M2T",
 };
+
+export enum LocalStorageKeys {
+  user = "user",
+}

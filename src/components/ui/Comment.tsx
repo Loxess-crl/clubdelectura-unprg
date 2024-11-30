@@ -5,6 +5,9 @@ import { ThumbsDown, ThumbsUp } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import LoginModal from "./LoginModal";
 import { Avatar, AvatarFallback, AvatarImage } from "./shadcn/Avatar";
+import { getItemsFromLocalStorage } from "@/hooks/localStorageService";
+import type { User } from "@/interfaces/user.interface";
+import { LocalStorageKeys } from "@/data/constants";
 
 export default function CommentCard({
   comment,
@@ -15,7 +18,7 @@ export default function CommentCard({
   bookId: number;
   parentsId?: string[];
 }) {
-  const userId = localStorage.getItem("userId") ?? "";
+  const user = getItemsFromLocalStorage<User>(LocalStorageKeys.user);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -29,7 +32,7 @@ export default function CommentCard({
   const subComments = comment.comments ? Object.values(comment.comments) : [];
 
   const handleReply = () => {
-    if (!userId) {
+    if (!user) {
       setIsModalOpen(true);
       return;
     }
@@ -40,8 +43,8 @@ export default function CommentCard({
         likes: {},
         dislikes: {},
         createdAt: new Date().getTime(),
-        userName: localStorage.getItem("userName") ?? "User",
-        userAvatar: localStorage.getItem("userAvatar") ?? "",
+        userName: user.displayName,
+        userAvatar: user.avatarUrl ?? "",
       };
 
       addComment(bookId.toString(), newSubcomment, [
@@ -54,7 +57,8 @@ export default function CommentCard({
   };
 
   const handleLike = (isLike = true) => {
-    updateLikesDislikes(bookId.toString(), comment.id, userId, isLike, [
+    if (!user) return;
+    updateLikesDislikes(bookId.toString(), comment.id, user.id, isLike, [
       ...parentsId,
     ]);
   };
@@ -84,7 +88,7 @@ export default function CommentCard({
             <button
               onClick={() => handleLike()}
               className={`flex items-center text-sm transition-colors duration-200 ${
-                likes.find(([key]) => key === userId)
+                likes.find(([key]) => key === user?.id)
                   ? "text-blue-500"
                   : "text-gray-500 hover:text-blue-500"
               }`}
@@ -97,7 +101,7 @@ export default function CommentCard({
             <button
               onClick={() => handleLike(false)}
               className={`flex items-center text-sm transition-colors duration-200 ${
-                dislikes.find(([key]) => key === userId)
+                dislikes.find(([key]) => key === user?.id)
                   ? "text-red-500"
                   : "text-gray-500 hover:text-red-500"
               }`}

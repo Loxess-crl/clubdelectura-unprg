@@ -1,5 +1,4 @@
 import { database } from "@/firebase/client";
-import type { CollectionEntry } from "astro:content";
 import { get, query, ref, orderByChild, limitToLast } from "firebase/database";
 
 interface FeaturedBook {

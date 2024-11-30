@@ -1,8 +1,7 @@
 import { getRatedBooks } from "@/hooks/useRating";
-import type { CollectionEntry, ContentCollectionKey } from "astro:content";
-import { ArrowRight, Search, Star } from "lucide-react";
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import type { CollectionEntry } from "astro:content";
+import { Search } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export default function AllBooks({
   books,

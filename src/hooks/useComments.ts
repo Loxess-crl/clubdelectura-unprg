@@ -12,14 +12,11 @@ export const useComments = (bookId: number) => {
 
     onValue(commentsRef, (snapshot) => {
       const commentsData = snapshot.val();
-      console.log("COMMENTS", commentsData);
-
       if (commentsData) {
         setComments(Object.values(commentsData));
       }
 
       setLoading(false);
-      console.log("loading", loading);
     });
   }, [bookId]);
 

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import CommentCard from "./ui/Comment";
 import { addComment, useComments } from "@/hooks/useComments";
-import { isUserLoggedIn } from "@/hooks/useAuth";
 
 import { Button } from "./ui/shadcn/Button";
 import LoginModal from "./ui/LoginModal";
+import { getItemsFromLocalStorage } from "@/hooks/localStorageService";
+import { LocalStorageKeys } from "@/data/constants";
+import type { User } from "@/interfaces/user.interface";
 
 export default function CommentSection({ bookId }: { bookId: number }) {
   const { comments, loading } = useComments(bookId);
@@ -13,9 +15,10 @@ export default function CommentSection({ bookId }: { bookId: number }) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const isLoggedIn = isUserLoggedIn();
+  const user = getItemsFromLocalStorage<User>(LocalStorageKeys.user);
 
   const handleAddComment = () => {
+    if (!user) return;
     if (newComment.trim()) {
       addComment(bookId.toString(), {
         id: "",
@@ -23,8 +26,8 @@ export default function CommentSection({ bookId }: { bookId: number }) {
         likes: {},
         dislikes: {},
         createdAt: new Date().getTime(),
-        userName: localStorage.getItem("userName") ?? "User",
-        userAvatar: localStorage.getItem("userAvatar") ?? "",
+        userName: user.displayName ?? "Usuario",
+        userAvatar: user.avatarUrl ?? "",
         comments: [],
       });
     }
@@ -34,7 +37,7 @@ export default function CommentSection({ bookId }: { bookId: number }) {
   return (
     <div className="mx-auto p-12">
       <h2 className="text-2xl font-bold mb-4">Comentarios</h2>
-      {isLoggedIn ? (
+      {user ? (
         <div className="mb-6 animate-slideDown">
           <textarea
             value={newComment}

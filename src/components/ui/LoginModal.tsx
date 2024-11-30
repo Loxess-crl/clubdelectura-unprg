@@ -11,6 +11,10 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useState } from "react";
 import { Loader2Icon } from "lucide-react";
 import { app } from "@/firebase/client";
+import type { User } from "@/interfaces/user.interface";
+import { addUser, getUserById } from "@/hooks/useUser";
+import { setLocalStorageItem } from "@/hooks/localStorageService";
+import { LocalStorageKeys } from "@/data/constants";
 app;
 
 const provider = new GoogleAuthProvider();
@@ -31,13 +35,25 @@ const LoginModal = ({
   const handleLogin = () => {
     setIsLoading(true);
     signInWithPopup(auth, provider)
-      .then((result) => {
-        const user = result.user;
-        localStorage.setItem("userName", user.displayName || "");
-        localStorage.setItem("userAvatar", user.photoURL || "");
-        localStorage.setItem("userId", user.uid);
-        localStorage.setItem("userEmail", user.email || "");
-        setIsLoggedId(user.uid);
+      .then(async (result) => {
+        const user_log = result.user;
+        const user = await getUserById(user_log.uid);
+        if (user) {
+          user.googlePhotoUrl = user_log.photoURL || "";
+          setLocalStorageItem(LocalStorageKeys.user, user);
+          setIsLoggedId(user.id);
+        } else {
+          const newUser: User = {
+            id: user_log.uid,
+            displayName: user_log.displayName || "",
+            email: user_log.email || "",
+            avatarUrl: user_log.photoURL || "",
+            googlePhotoUrl: user_log.photoURL || "",
+          };
+          addUser(newUser);
+          setLocalStorageItem(LocalStorageKeys.user, newUser);
+          setIsLoggedId(newUser.id);
+        }
       })
       .catch((error) => {
         console.error("Error en el login: ", error);
