@@ -9,7 +9,6 @@ interface FeaturedBook {
     votes: Record<string, number>;
   };
 }
-// Función para obtener los 3 libros mejor calificados
 export async function getTopRatedBooks() {
   const booksRef = ref(database, "books");
   const topBooksQuery = query(
@@ -25,7 +24,6 @@ export async function getTopRatedBooks() {
       topBooks.push({ id: childSnapshot.key, ...childSnapshot.val() });
     });
 
-    // Ordenar de mayor a menor (porque limitToLast devuelve en orden ascendente)
     return topBooks.reverse();
   } else {
     console.log("No se encontraron libros.");
@@ -44,7 +42,6 @@ export async function getRatedBooks() {
       topBooks.push({ id: childSnapshot.key, ...childSnapshot.val() });
     });
 
-    // Ordenar de mayor a menor (porque limitToLast devuelve en orden ascendente)
     return topBooks.reverse();
   } else {
     console.log("No se encontraron libros.");

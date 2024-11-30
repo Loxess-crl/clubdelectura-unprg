@@ -33,12 +33,10 @@ const BooksCarousel = ({ books }: { books: CollectionEntry<"books">[] }) => {
               <Card className="relative h-full bg-white border border-gray-200 shadow-lg rounded-lg transition-transform hover:scale-105 duration-300">
                 <a href={`libros/${book.slug}`}>
                   <CardContent className="relative flex flex-col items-center p-6 overflow-hidden group">
-                    {/* Badge */}
                     <div className="relative z-10 px-3 py-1 bg-accentTheme text-white rounded-full mb-4 text-xs font-semibold">
                       Semana {book.data.week}
                     </div>
 
-                    {/* Imagen del libro */}
                     <div className="relative mb-6 transition-transform duration-500 ease-out group-hover:scale-105">
                       <img
                         src={book.data.bookImage.src}
@@ -47,7 +45,6 @@ const BooksCarousel = ({ books }: { books: CollectionEntry<"books">[] }) => {
                       />
                     </div>
 
-                    {/* Información del libro */}
                     <div className="relative z-10 text-center">
                       <h3 className="text-lg font-semibold text-primaryTheme mb-2 group-hover:text-accentTheme transition-colors duration-300">
                         {book.data.title}

@@ -2,91 +2,127 @@
 import type { CollectionEntry } from "astro:content";
 import { Image } from "astro:assets";
 import qr_group from "@assets/images/qr_group.jpg";
-import BookBentoCard from "./ui/BookBentoCard.astro";
 import { links } from "@/data/constants";
-import axios from "axios";
+
+import club from "@assets/img/club.png";
+import club2 from "@assets/img/club2.png";
+import club3 from "@assets/img/club3.png";
+import club6 from "@assets/img/club6.png";
+import club4 from "@assets/img/club4.png";
+import club5 from "@assets/img/club5.png";
+
+const upcomingMeeting = {
+  date: "No sé, la otra semana",
+  time: "De 01:00 p.m. a 02:00 p.m. supongo",
+  location: "Por definir ksbwkeje",
+};
 
 interface Props {
   book: CollectionEntry<"books">;
 }
 const { book } = Astro.props;
-
-// const { phrase, author } = (
-//   await axios.get("https://frasedeldia.azurewebsites.net/api/phrase")
-// ).data;
 ---
 
-<section>
-  <div class="flex min-h-screen w-full items-center justify-center">
-    <div
-      class="grid min-h-screen w-full gap-2 sm:gap-4 p-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 grid-rows-[repeat(6,1fr)] sm:grid-rows-4 md:grid-rows-3 shadow-md bg-gradient-to-br from-black/90 to-gray-700
-       rounded-xl"
-    >
-      <div class="col-span-2 row-span-1 sm:row-span-2 card">
-        <p class="text-2xl mb-4">Libro de la Semana</p>
-        <BookBentoCard book={book} />
+<section id="info" class="py-20 bg-white">
+  <div class="container mx-auto px-4">
+    <h2 class="text-4xl font-bold text-slate-900 mb-12">
+      Lectura de la semana
+    </h2>
+    <div class="flex flex-col md:flex-row items-start gap-12">
+      <div class="flex-shrink-0 w-full md:w-1/2 lg:w-[350px]">
+        <Image
+          src={book.data.bookImage}
+          alt={book.data.title}
+          class="w-full h-auto max-h-[500px] object-cover rounded-3xl shadow-2xl transition-transform duration-300 ease-in-out hover:scale-105"
+        />
       </div>
-
-      <!-- Próxima reunión -->
-      <div
-        class="col-span-2 sm:col-span-1 row-span-1 card flex flex-col items-center justify-center"
-      >
-        <lord-icon
-          src="https://cdn.lordicon.com/warimioc.json"
-          trigger="hover"
-          delay="3000"
-          class="size-16"
-        >
-        </lord-icon>
-        <div class="text-lg font-semibold">Próxima reunión</div>
-        <div class="text-base">Viernes, 12:30 p.m.</div>
-      </div>
-
-      <!-- Frase del día -->
-      <div class="col-span-2 row-span-1 card flex items-center space-x-4">
-        <!-- Contenido de la cita -->
+      <div class="flex-1 space-y-8">
         <div>
-          <p class="text-lg font-semibold text-gray-900">
-            <!-- "{phrase}" -->
-            frase
+          <h2 class="text-4xl font-bold text-[#66503b]">
+            {book.data.title}
+          </h2>
+          <p class="text-xl text-[#66503b] mt-2">
+            por {book.data.authors}
           </p>
-          <!-- <p class="mt-2 text-gray-500">- {author}</p> -->
-          <p class="mt-2 text-gray-500">- autor</p>
         </div>
-      </div>
-
-      <!-- Únete al club -->
-      <div class="col-span-2 sm:col-span-1 row-span-1 card">
+        <div class="flex items-center text-[#66503b] space-x-4">
+          <span>{book.data.pubyear}</span>
+          <span class="h-4 w-px bg-[#66503b]/50"></span>
+          <span>{book.data.category}</span>
+          <span class="h-4 w-px bg-[#66503b]/50"></span>
+          <span class="font-medium text-[#ea9a12]">Semana {book.data.week}</span
+          >
+        </div>
+        <p class="text-[#66503b] text-lg">{book.data.description}</p>
         <a
-          href={`${links.whatsapp}`}
-          target="_blank"
-          class="flex flex-col justify-center items-center"
+          href={"libros/" + book.slug}
+          class="inline-flex items-center font-medium text-[#75b3a6] hover:text-[#4686c8] transition-colors duration-300 ease-in-out"
         >
-          <p class="text-xl font-bold">Únete al club</p>
-          <Image src={qr_group} alt={"Whatsapp group"} class="size-40" />
+          Leer Más
+          <svg
+            class="ml-2 h-5 w-5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+              clip-rule="evenodd"></path>
+          </svg>
         </a>
       </div>
+    </div>
 
-      <!-- Últimas 5 lecturas -->
-      <div class="col-span-2 row-span-2 md:row-span-3 card">
-        <div class="flex gap-2 items-center">
-          <lord-icon
-            src="https://cdn.lordicon.com/jectmwqf.json"
-            trigger="hover"
-            colors="primary:#121331,secondary:#90aacf"
-            class="size-12"
-          >
-          </lord-icon>
-          <p class="text-2xl">Últimos libros</p>
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16 translate-y-4 transition-all duration-700 ease-in-out"
+    >
+      <div class="bg-white rounded-3xl shadow-2xl p-8 space-y-6">
+        <h3 class="text-3xl font-bold text-[#75b3a6]">Próxima Reunión</h3>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <p class="text-[#66503b] font-medium">Fecha</p>
+            <p class="text-lg">{upcomingMeeting.date}</p>
+          </div>
+          <div>
+            <p class="text-[#66503b] font-medium">Hora</p>
+            <p class="text-lg">{upcomingMeeting.time}</p>
+          </div>
+          <div class="col-span-2">
+            <p class="text-[#66503b] font-medium">Ubicación</p>
+            <p class="text-lg">{upcomingMeeting.location}</p>
+          </div>
         </div>
       </div>
-
-      <!-- Cita del día -->
       <div
-        class="col-span-2 sm:col-span-3 row-span-1 sm:row-span-2 card flex items-center justify-center"
+        class="bg-gradient-to-br from-[#4686c8] to-[#75b3a6] rounded-3xl shadow-2xl p-8 flex items-center justify-between translate-y-4 transition-all duration-700 ease-in-out"
+        style="--animate-delay: 0.3s"
       >
-        <p>Cita del día</p>
+        <div class="space-y-2">
+          <h3 class="text-3xl font-bold text-white">
+            ¡Únete a Nuestra Comunidad!
+          </h3>
+          <p class="text-white opacity-90">
+            Escanea el código QR para unirte al grupo
+          </p>
+        </div>
+        <a href={links.whatsapp} target="_blank">
+          <Image src={qr_group} alt="Código QR del Grupo" class="w-32 h-auto" />
+        </a>
       </div>
+    </div>
+
+    <div
+      class="mt-16 grid grid-cols-3 md:grid-cols-6 gap-6 animate__animated animate__fadeIn"
+      style="--animate-delay: 0.75s"
+    >
+      <Image src={club} alt="Icon 1" class="w-12 h-auto" />
+      <Image src={club2} alt="Icon 2" class="w-12 h-auto" />
+      <Image src={club3} alt="Icon 3" class="w-12 h-auto" />
+      <Image src={club4} alt="Icon 4" class="w-12 h-auto" />
+      <Image src={club5} alt="Icon 5" class="w-12 h-auto" />
+      <Image src={club6} alt="Icon 6" class="w-12 h-auto" />
     </div>
   </div>
 </section>

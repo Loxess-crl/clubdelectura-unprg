@@ -181,13 +181,6 @@ const Navbar = ({ currentPath }: { currentPath: string }) => {
             >
               Biblioteca
             </SidebarButton>
-            <SidebarButton
-              href="/perfil"
-              isActive={currentPath === "/perfil"}
-              icon={<User />}
-            >
-              Mi Perfil
-            </SidebarButton>
           </nav>
 
           <QuoteCard />

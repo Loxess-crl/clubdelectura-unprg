@@ -7,7 +7,7 @@ import { Button } from "./ui/shadcn/Button";
 import LoginModal from "./ui/LoginModal";
 
 export default function CommentSection({ bookId }: { bookId: number }) {
-  const comments = useComments(bookId);
+  const { comments, loading } = useComments(bookId);
 
   const [newComment, setNewComment] = useState("");
 
@@ -66,8 +66,8 @@ export default function CommentSection({ bookId }: { bookId: number }) {
         </div>
       )}
       <div>
-        {comments ? (
-          comments.length > 0 ? (
+        {loading === false ? (
+          comments && comments.length > 0 ? (
             comments.map((comment, index) => (
               <CommentCard key={index} comment={comment} bookId={bookId} />
             ))

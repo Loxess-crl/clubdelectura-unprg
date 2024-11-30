@@ -1,15 +1,18 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { BookOpen, Users, Calendar, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import logo from "@assets/images/icon.png";
+import club2 from "@assets/img/club2.png";
+import club3 from "@assets/img/club3.png";
+import club6 from "@assets/img/club6.png";
+import club7 from "@assets/img/club7.png";
+import club8 from "@assets/img/club8.png";
 
 const HeroSection = () => {
   return (
     <section className="min-h-screen relative overflow-hidden bg-bgTheme px-6 pt-20">
-      {/* Fondo decorativo */}
-      <div className="absolute inset-0 bg-gradient-to-b from-purple-50 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-purple-50 to-transparent"></div>
 
-      {/* Elementos decorativos flotantes */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
           animate={{
@@ -44,7 +47,6 @@ const HeroSection = () => {
 
       <div className="max-w-7xl mx-auto relative">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Contenido principal */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -93,20 +95,20 @@ const HeroSection = () => {
                 <ArrowRight className="w-5 h-5" />
               </motion.button>
 
-              <motion.button
+              <motion.a
+                href="#info"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="border-2 border-gray-200 hover:border-purple-200 px-8 py-4 rounded-xl font-medium flex items-center gap-2 transition-colors"
               >
                 Conoce más
-              </motion.button>
+              </motion.a>
             </div>
 
-            {/* Stats */}
             <div className="flex flex-wrap gap-8">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center">
-                  <Users className="w-6 h-6 text-secondaryTheme" />
+                  <img src={club7.src} alt="icono 7 de club" />
                 </div>
                 <div>
                   <p className="text-2xl font-bold">50+</p>
@@ -116,7 +118,7 @@ const HeroSection = () => {
 
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center">
-                  <BookOpen className="w-6 h-6 text-secondaryTheme" />
+                  <img src={club6.src} alt="icono 6 de club" />
                 </div>
                 <div>
                   <p className="text-2xl font-bold">5</p>
@@ -126,7 +128,7 @@ const HeroSection = () => {
 
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center">
-                  <Calendar className="w-6 h-6 text-secondaryTheme" />
+                  <img src={club8.src} alt="icono 8 de club" />
                 </div>
                 <div>
                   <p className="text-2xl font-bold">2</p>
@@ -136,7 +138,6 @@ const HeroSection = () => {
             </div>
           </motion.div>
 
-          {/* Ilustración */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -148,7 +149,6 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Gradiente decorativo inferior */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
     </section>
   );
@@ -159,15 +159,11 @@ const MainIllustration = () => (
 );
 
 const BookSVG1 = () => (
-  <svg viewBox="0 0 100 100">
-    <rect width="80" height="100" fill="#DDD6FE" />
-  </svg>
+  <img src={club2.src} alt="Ilustración principal" className="w-80 lg:w-96" />
 );
 
 const BookSVG2 = () => (
-  <svg viewBox="0 0 100 100">
-    <rect width="80" height="100" fill="#C4B5FD" />
-  </svg>
+  <img src={club3.src} alt="Ilustración principal" className="w-80 lg:w-96" />
 );
 
 export default HeroSection;

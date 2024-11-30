@@ -42,133 +42,124 @@ export default function AllBooks({
 
     fetchRatedBooks();
   }, []);
+
   return (
     <section className="py-20 px-6 bg-gradient-to-b from-white to-gray-50">
-      <div className="max-w-7xl mx-auto">
-        {/* Header and Search */}
-        <div className="mb-16 relative">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-gray-800 to-gray-600">
-              Biblioteca del Club
-            </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Explora nuestra colección curada de obras literarias, calificadas
-              y recomendadas por nuestra comunidad.
-            </p>
-          </motion.div>
+      <div className="min-h-screen bg-gray-50">
+        <div className="relative overflow-hidden bg-white">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-50 via-white to-blue-50 opacity-40" />
+          <div className="relative px-4 py-20 sm:px-6 lg:px-8">
+            <div className="text-center max-w-4xl mx-auto space-y-8">
+              <h1 className="relative">
+                <span className="block text-gray-400 text-sm font-medium tracking-widest uppercase mb-3">
+                  Biblioteca Digital
+                </span>
+                <span className="relative block">
+                  <span className="block text-4xl sm:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-600 via-pink-600 to-gray-600 leading-tight mb-4">
+                    Descubre Nuevos Mundos
+                  </span>
+                </span>
+              </h1>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                Explora nuestra selección de libros que te inspirarán y
+                desafiarán tu imaginación.
+              </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-2xl mx-auto"
-          >
-            <div className="relative group">
+              <div className="flex justify-center pt-8">
+                <div className="animate-bounce bg-white p-2 w-10 h-10 ring-1 ring-gray-900/5 shadow-lg rounded-full flex items-center justify-center">
+                  <svg
+                    className="w-6 h-6 text-blue-500"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="py-12 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto mb-16">
+            <div className="relative max-w-xl mx-auto">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Search className="h-5 w-5 text-gray-400" />
+              </div>
               <input
                 type="text"
-                placeholder="Buscar por título o autor..."
-                className="w-full p-6 pl-14 rounded-2xl border-2 border-gray-200 focus:border-purple-500 focus:outline-none shadow-sm transition-all duration-300 text-lg bg-white/80 backdrop-blur-sm"
+                className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-2xl leading-5 bg-white shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-150 ease-in-out"
+                placeholder="Buscar por título o categoría..."
                 value={searchTerm}
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
                   setFilteredBooks(
-                    books.filter((book) =>
-                      book.data.title
-                        .toLowerCase()
-                        .includes(e.target.value.toLowerCase())
+                    books.filter(
+                      (book) =>
+                        book.data.title
+                          .toLowerCase()
+                          .includes(e.target.value.toLowerCase()) ||
+                        book.data.category
+                          .toLowerCase()
+                          .includes(e.target.value.toLowerCase())
                     )
                   );
                 }}
               />
-              <Search
-                className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 transition-colors duration-300 group-focus-within:text-purple-500"
-                size={24}
-              />
-              <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-r from-purple-100 to-pink-100 blur-xl opacity-0 transition-opacity duration-300 group-focus-within:opacity-100" />
             </div>
-          </motion.div>
-        </div>
+          </div>
 
-        {/* Books Grid */}
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="show"
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
-        >
-          {filteredBooks.map((book) => (
-            <motion.div
-              key={book.id}
-              variants={item}
-              className="group relative"
-            >
-              <div className="aspect-[3/4] rounded-xl overflow-hidden mb-4">
-                <img
-                  src={book.data.bookImage.src}
-                  alt={book.data.title}
-                  className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+              {filteredBooks.map((book) => (
+                <a
+                  key={book.id}
+                  className="group relative transform transition-all duration-300 hover:-translate-y-2 cursor-pointer"
+                  href={`/libros/${book.slug}`}
+                >
+                  <div className="relative aspect-[2/3] rounded-xl overflow-hidden shadow-lg group-hover:shadow-2xl transition-shadow duration-300">
+                    <img
+                      src={book.data.bookImage.src}
+                      alt={book.data.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
 
-                <div className="absolute inset-x-0 bottom-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                  <a
-                    href={`libros/${book.slug}`}
-                    className="w-full bg-white text-black py-3 px-6 rounded-lg font-medium flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors"
-                  >
-                    Ver detalles
-                    <ArrowRight size={18} />
-                  </a>
-                </div>
-              </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="px-3 py-1 rounded-full bg-purple-100 text-purple-700 text-xs font-medium">
-                    Semana {book.data.week}
-                  </span>
-                  {book.data.ratings && (
-                    <div className="flex items-center gap-1">
-                      <Star
-                        size={14}
-                        className="text-yellow-400 fill-current"
-                      />
-                      <span className="text-sm font-medium">
-                        {book.data.ratings.average.toFixed(1)}
-                      </span>
-                      <span className="text-sm text-gray-500">
-                        ({Object.keys(book.data.ratings.votes ?? 0).length})
+                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <span className="inline-flex items-center px-2 py-1 rounded-lg text-xs font-medium bg-white/90 text-gray-800">
+                        {book.data.category}
                       </span>
                     </div>
-                  )}
-                </div>
 
-                <h3 className="font-bold text-xl leading-tight">
-                  {book.data.title}
-                </h3>
-                <p className="text-gray-600">{book.data.authors}</p>
-
-                {book.data.ratings && (
-                  <div className="flex gap-1 mt-2">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        size={16}
-                        className={`${
-                          i < Math.floor(book.data.ratings?.average || 0)
-                            ? "text-yellow-400 fill-current"
-                            : "text-gray-300"
-                        }`}
-                      />
-                    ))}
+                    <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                      <div className="space-y-1">
+                        <h3 className="text-sm font-bold leading-tight line-clamp-2">
+                          {book.data.title}
+                        </h3>
+                        <p className="text-xs font-medium opacity-90">
+                          {book.data.authors}
+                        </p>
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="opacity-75">
+                            {book.data.pubyear}
+                          </span>
+                          <span className="px-2 py-1 rounded-lg bg-blue-500/80 text-white text-xs">
+                            Semana {book.data.week}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                )}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -5,5 +5,6 @@ description: "«El almohadón de plumas» es un cuento de Horacio Quiroga que re
 pubyear: 1917
 authors: ["Horacio Quiroga"]
 bookImage: "@bookImg/el_almohadon_de_plumas.jpg"
+category: "Cuento, terror"
 week: 4
 ---

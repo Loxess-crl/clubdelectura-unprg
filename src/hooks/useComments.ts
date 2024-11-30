@@ -5,20 +5,25 @@ import { useEffect, useState } from "react";
 
 export const useComments = (bookId: number) => {
   const [comments, setComments] = useState<Comment[]>();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const commentsRef = ref(database, `books/${bookId}/comments`);
 
-    const unsubscribe = onValue(commentsRef, (snapshot) => {
-      const data = snapshot.val() as Record<string, Comment> | null;
-      const comments = data ? Object.values(data) : [];
-      setComments(comments);
-    });
+    onValue(commentsRef, (snapshot) => {
+      const commentsData = snapshot.val();
+      console.log("COMMENTS", commentsData);
 
-    return () => unsubscribe();
+      if (commentsData) {
+        setComments(Object.values(commentsData));
+      }
+
+      setLoading(false);
+      console.log("loading", loading);
+    });
   }, [bookId]);
 
-  return comments;
+  return { comments, loading };
 };
 
 const getCommentRef = (

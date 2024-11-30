@@ -39,19 +39,15 @@ export default function TopBooks({
             }`}
           >
             <div className="relative overflow-hidden rounded-xl shadow-lg">
-              {/* Overlay base siempre presente pero invisible */}
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-              {/* Imagen */}
               <img
                 src={book.data.bookImage.src}
                 alt={book.data.title}
                 className="w-full h-[360px] object-cover transition-transform duration-500 group-hover:scale-105"
               />
 
-              {/* Info Container con su propio fondo para mayor legibilidad */}
               <div className="absolute bottom-0 left-0 right-0 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                {/* Fondo adicional para el texto */}
                 <div className="bg-gradient-to-t from-black/95 via-black/80 to-transparent pt-8 pb-4 px-6">
                   <div className="relative z-10">
                     <span className="inline-block px-2 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white/90 text-xs font-medium mb-2">
