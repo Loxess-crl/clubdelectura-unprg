@@ -3,10 +3,12 @@ import type { Comment } from "@/interfaces/comment.interface";
 import { get, onValue, ref, update } from "firebase/database";
 import { useEffect, useState } from "react";
 
+const covertIdToPath = (id: string) => id.replace(/\./g, "_");
+
 export const useComments = (bookId: string) => {
   const [comments, setComments] = useState<Comment[]>();
   const [loading, setLoading] = useState(true);
-  const id = bookId.replace(/\./g, "_");
+  const id = covertIdToPath(bookId);
   useEffect(() => {
     const commentsRef = ref(database, `books/${id}/comments`);
 
@@ -28,7 +30,8 @@ const getCommentRef = (
   parentCommentIds: string[],
   commentId: string
 ) => {
-  let commentRefString = `books/${bookId}/comments`;
+  const id = covertIdToPath(bookId);
+  let commentRefString = `books/${id}/comments`;
 
   parentCommentIds.forEach((commentId) => {
     commentRefString += `/${commentId}/comments`;
@@ -44,9 +47,10 @@ export const addComment = (
   newComment: Comment,
   parentCommentIds: string[] = []
 ) => {
+  const id = covertIdToPath(bookId);
   const commentId = generateCommentId();
 
-  const newCommentRef = getCommentRef(bookId, parentCommentIds, commentId);
+  const newCommentRef = getCommentRef(id, parentCommentIds, commentId);
 
   const commentData = {
     ...newComment,
@@ -76,7 +80,8 @@ export const updateLikesDislikes = (
   isLike: boolean,
   parentsId: string[] = []
 ) => {
-  const commentRef = getCommentRef(bookId, parentsId, commentId);
+  const id = covertIdToPath(bookId);
+  const commentRef = getCommentRef(id, parentsId, commentId);
 
   get(commentRef).then((snapshot) => {
     const commentData = snapshot.val();

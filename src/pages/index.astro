@@ -9,7 +9,7 @@ import HeroSection from "@/components/HeroSection";
 const books = await getCollection("books");
 
 const lastBook = books.sort((a, b) => {
-  return b.data.week - a.data.week;
+  return Number(b.data.week) - Number(a.data.week);
 })[0];
 ---
 

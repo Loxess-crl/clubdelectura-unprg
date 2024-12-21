@@ -32,7 +32,9 @@ export default function AllBooks({
       const ratedBooks = await getRatedBooks();
 
       const ratedBooksData = books.map((book) => {
-        const ratedBook = ratedBooks.find((b) => b.id == book.data.week);
+        const ratedBook = ratedBooks.find(
+          (b) => Number(b.id) == Number(book.data.week)
+        );
         return ratedBook ? { ...book, ratings: ratedBook.ratings } : book;
       });
 

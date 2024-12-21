@@ -7,7 +7,6 @@ import {
   ChevronRight,
   ChevronLeft,
   BookOpen,
-  Settings,
   LogOut,
 } from "lucide-react";
 import {

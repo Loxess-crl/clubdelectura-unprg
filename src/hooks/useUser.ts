@@ -1,14 +1,6 @@
 import { database } from "@/firebase/client";
 import type { User } from "@/interfaces/user.interface";
-import {
-  get,
-  query,
-  ref,
-  orderByChild,
-  limitToLast,
-  set,
-  update,
-} from "firebase/database";
+import { get, ref, set, update } from "firebase/database";
 
 export async function getUserById(userId: string): Promise<User | undefined> {
   const booksRef = ref(database, `users/${userId}`);
