@@ -6,5 +6,5 @@ pubyear: 1917
 authors: ["Horacio Quiroga"]
 bookImage: "@bookImg/el_almohadon_de_plumas.jpg"
 category: "Cuento, terror"
-week: 4
+week: "4"
 ---

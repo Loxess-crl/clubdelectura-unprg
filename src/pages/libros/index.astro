@@ -3,7 +3,10 @@ import Layout from "@/layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import AllBooks from "@/components/AllBooks";
 import BookMainHero from "@/components/BookMainHero";
-const books = await getCollection("books");
+const booksData = await getCollection("books");
+const books = booksData.sort(
+  (a, b) => Number(b.data.week) - Number(a.data.week)
+);
 ---
 
 <Layout title="Libros - Club de Lectura" lang="es-PE">

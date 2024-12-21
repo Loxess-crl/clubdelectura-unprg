@@ -6,5 +6,5 @@ pubyear: 1943
 authors: ["Antoine de Saint-Exupéry"]
 category: "Cuento, filosofía"
 bookImage: "@bookImg/el_principito.jpg"
-week: 2
+week: "2"
 ---

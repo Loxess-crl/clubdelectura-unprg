@@ -6,5 +6,5 @@ pubyear: 1843
 authors: ["Edgar Allan Poe"]
 category: "Cuento, suspenso"
 bookImage: "@bookImg/el_corazon_delator.jpg"
-week: 1
+week: "1"
 ---

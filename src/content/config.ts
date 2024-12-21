@@ -10,7 +10,7 @@ const bookCollection = defineCollection({
       authors: z.array(z.string()),
       pubyear: z.number(),
       bookImage: image(),
-      week: z.number(),
+      week: z.string(),
       category: z.string(),
       ratings: z
         .object({

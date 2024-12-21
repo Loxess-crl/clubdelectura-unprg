@@ -8,7 +8,7 @@ import { getItemsFromLocalStorage } from "@/hooks/localStorageService";
 import { LocalStorageKeys } from "@/data/constants";
 import type { User } from "@/interfaces/user.interface";
 
-export default function CommentSection({ bookId }: { bookId: number }) {
+export default function CommentSection({ bookId }: { bookId: string }) {
   const { comments, loading } = useComments(bookId);
 
   const [newComment, setNewComment] = useState("");

@@ -6,5 +6,5 @@ pubyear: 1848
 authors: ["Fiódor Dostoyevski"]
 category: "Novela, filosofía"
 bookImage: "@bookImg/noches_blancas.jpg"
-week: 3
+week: "3"
 ---

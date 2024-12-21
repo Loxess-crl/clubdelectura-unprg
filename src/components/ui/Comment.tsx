@@ -15,7 +15,7 @@ export default function CommentCard({
   parentsId = [],
 }: {
   comment: Comment;
-  bookId: number;
+  bookId: string;
   parentsId?: string[];
 }) {
   const user = getItemsFromLocalStorage<User>(LocalStorageKeys.user);

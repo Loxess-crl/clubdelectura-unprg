@@ -3,12 +3,12 @@ import type { Comment } from "@/interfaces/comment.interface";
 import { get, onValue, ref, update } from "firebase/database";
 import { useEffect, useState } from "react";
 
-export const useComments = (bookId: number) => {
+export const useComments = (bookId: string) => {
   const [comments, setComments] = useState<Comment[]>();
   const [loading, setLoading] = useState(true);
-
+  const id = bookId.replace(/\./g, "_");
   useEffect(() => {
-    const commentsRef = ref(database, `books/${bookId}/comments`);
+    const commentsRef = ref(database, `books/${id}/comments`);
 
     onValue(commentsRef, (snapshot) => {
       const commentsData = snapshot.val();

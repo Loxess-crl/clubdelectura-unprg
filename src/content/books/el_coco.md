@@ -6,5 +6,5 @@ pubyear: 1978
 authors: ["Stephen King"]
 category: "Cuento, terror"
 bookImage: "@bookImg/el_umbral_de_la_noche.png"
-week: 5
+week: "5"
 ---

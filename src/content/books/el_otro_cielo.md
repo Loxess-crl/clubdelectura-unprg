@@ -6,5 +6,5 @@ pubyear: 1951
 authors: ["Julio Cortázar"]
 category: "Novela, Realismo mágico"
 bookImage: "@bookImg/todos_los_fuegos_el_fuego.jpg"
-week: 6
+week: "6"
 ---

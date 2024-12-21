@@ -6,5 +6,5 @@ pubyear: 1951
 authors: ["Osamu Dazai"]
 category: "Novela, psicología"
 bookImage: "@bookImg/indigno_de_ser_humano.jpg"
-week: 8
+week: "8"
 ---
