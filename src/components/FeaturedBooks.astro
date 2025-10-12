@@ -4,9 +4,10 @@ import BooksCarousel from "./BooksCarousel";
 import BookImage from "./ui/BookImage.astro";
 import BookCard from "./ui/BookCard.astro";
 import { ArrowRight } from "lucide-react";
+import type { Book } from "@/interfaces/book.interface";
 
 interface Props {
-  books: CollectionEntry<"books">[];
+  books: Book[];
 }
 
 const { books } = Astro.props;

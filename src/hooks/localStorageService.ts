@@ -1,4 +1,4 @@
-import type { LocalStorageKeys } from "@/data/constants";
+import { LocalStorageKeys } from "@/data/constants";
 
 export const setLocalStorageItem = (key: LocalStorageKeys, value: any) => {
   const keyString = JSON.stringify(key);
@@ -26,4 +26,9 @@ export const getItemsFromLocalStorage = <T>(
 
 export const clearTotalLocalStorage = () => {
   localStorage.clear();
+};
+
+export const isUserAdmin = (): boolean => {
+  const role = getItemsFromLocalStorage<string>(LocalStorageKeys.role);
+  return role === "admin";
 };

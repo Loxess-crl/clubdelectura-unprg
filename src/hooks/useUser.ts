@@ -22,3 +22,15 @@ export async function updateUser(userId: string, updatedUser: User) {
   const userRef = ref(database, `users/${userId}`);
   await update(userRef, updatedUser);
 }
+
+export const getUserRole = async (uid: string): Promise<string | null> => {
+  const roleRef = ref(database, `roles/${uid}`);
+  const snapshot = await get(roleRef);
+
+  if (snapshot.exists()) {
+    const data = snapshot.val();
+    return typeof data === "string" ? data : data.role;
+  }
+
+  return null;
+};

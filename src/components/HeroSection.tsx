@@ -7,6 +7,7 @@ import club3 from "@assets/img/club3.png";
 import club6 from "@assets/img/club6.png";
 import club7 from "@assets/img/club7.png";
 import club8 from "@assets/img/club8.png";
+import { links } from "@/data/constants";
 
 const HeroSection = () => {
   return (
@@ -87,6 +88,7 @@ const HeroSection = () => {
 
             <div className="flex flex-wrap gap-6 mb-12">
               <motion.button
+                onClick={() => (window.location.href = links.whatsapp)}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="bg-accentTheme hover:bg-primaryTheme text-white px-8 py-4 rounded-xl font-medium flex items-center gap-2 shadow-lg shadow-purple-200 transition-colors"

@@ -12,7 +12,7 @@ import { useState } from "react";
 import { Loader2Icon } from "lucide-react";
 import { app } from "@/firebase/client";
 import type { User } from "@/interfaces/user.interface";
-import { addUser, getUserById } from "@/hooks/useUser";
+import { addUser, getUserById, getUserRole } from "@/hooks/useUser";
 import { setLocalStorageItem } from "@/hooks/localStorageService";
 import { LocalStorageKeys } from "@/data/constants";
 app;
@@ -42,6 +42,14 @@ const LoginModal = ({
           user.googlePhotoUrl = user_log.photoURL || "";
           setLocalStorageItem(LocalStorageKeys.user, user);
           setIsLoggedId(user.id);
+          getUserRole(user.id)
+            .then((role) => {
+              const userRole = role || "user";
+              setLocalStorageItem(LocalStorageKeys.role, userRole);
+            })
+            .catch((error) => {
+              console.error("Error al obtener el rol del usuario: ", error);
+            });
         } else {
           const newUser: User = {
             id: user_log.uid,

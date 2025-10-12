@@ -1,16 +1,16 @@
 import { database } from "@/firebase/client";
-import type { Comment } from "@/interfaces/comment.interface";
+import type { Comment, CommentWithUser } from "@/interfaces/comment.interface";
 import { get, onValue, ref, update } from "firebase/database";
 import { useEffect, useState } from "react";
 
-const covertIdToPath = (id: string) => id.replace(/\./g, "_");
+const BASE_PATH = "comments";
+const USERS_PATH = "users";
 
-export const useComments = (bookId: string) => {
+export const useComments = (slug: string) => {
   const [comments, setComments] = useState<Comment[]>();
   const [loading, setLoading] = useState(true);
-  const id = covertIdToPath(bookId);
   useEffect(() => {
-    const commentsRef = ref(database, `books/${id}/comments`);
+    const commentsRef = ref(database, `${BASE_PATH}/${slug}`);
 
     onValue(commentsRef, (snapshot) => {
       const commentsData = snapshot.val();
@@ -20,18 +20,62 @@ export const useComments = (bookId: string) => {
 
       setLoading(false);
     });
-  }, [bookId]);
+  }, [slug]);
+
+  return { comments, loading };
+};
+
+export const useCommentsWithUser = (slug: string) => {
+  const [comments, setComments] = useState<CommentWithUser[]>();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const commentsRef = ref(database, `${BASE_PATH}/${slug}`);
+
+    const unsubscribe = onValue(commentsRef, async (snapshot) => {
+      const commentsData = snapshot.val();
+
+      if (!commentsData) {
+        setComments([]);
+        setLoading(false);
+        return;
+      }
+
+      const commentsArray: Comment[] = Object.values(commentsData);
+
+      const userIds = [...new Set(commentsArray.map((c) => c.userId))];
+
+      const userSnapshots = await Promise.all(
+        userIds.map((id) => get(ref(database, `${USERS_PATH}/${id}`)))
+      );
+
+      const userMap = Object.fromEntries(
+        userSnapshots.map((snap, i) => [userIds[i], snap.val()])
+      );
+
+      const enrichedComments: CommentWithUser[] = commentsArray.map(
+        (comment) => ({
+          ...comment,
+          user: userMap[comment.userId] ?? { name: "Anónimo", avatar: "" },
+        })
+      );
+
+      setComments(enrichedComments);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, [slug]);
 
   return { comments, loading };
 };
 
 const getCommentRef = (
-  bookId: string,
+  slug: string,
   parentCommentIds: string[],
   commentId: string
 ) => {
-  const id = covertIdToPath(bookId);
-  let commentRefString = `books/${id}/comments`;
+  let commentRefString = `${BASE_PATH}/${slug}`;
 
   parentCommentIds.forEach((commentId) => {
     commentRefString += `/${commentId}/comments`;
@@ -43,14 +87,13 @@ const getCommentRef = (
 };
 
 export const addComment = (
-  bookId: string,
+  slug: string,
   newComment: Comment,
   parentCommentIds: string[] = []
 ) => {
-  const id = covertIdToPath(bookId);
   const commentId = generateCommentId();
 
-  const newCommentRef = getCommentRef(id, parentCommentIds, commentId);
+  const newCommentRef = getCommentRef(slug, parentCommentIds, commentId);
 
   const commentData = {
     ...newComment,
@@ -74,14 +117,13 @@ function generateCommentId(): string {
 }
 
 export const updateLikesDislikes = (
-  bookId: string,
+  slug: string,
   commentId: string,
   userId: string,
   isLike: boolean,
   parentsId: string[] = []
 ) => {
-  const id = covertIdToPath(bookId);
-  const commentRef = getCommentRef(id, parentsId, commentId);
+  const commentRef = getCommentRef(slug, parentsId, commentId);
 
   get(commentRef).then((snapshot) => {
     const commentData = snapshot.val();

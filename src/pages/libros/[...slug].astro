@@ -2,82 +2,309 @@
 import CommentSection from "@/components/CommentSection";
 import { DownloadButton } from "@/components/ui/DownloadButton";
 import Layout from "@/layouts/Layout.astro";
-import Image from "astro/components/Image.astro";
-import { getCollection } from "astro:content";
+import BookRating from "@/components/PawRated";
+import paw from "@assets/img/club2.png";
+import { fetchBookById } from "@/services/book.service";
 
-export async function getStaticPaths() {
-  const books = await getCollection("books");
-  return books.map((book) => ({
-    params: { slug: book.slug },
-    props: { book },
-  }));
+export const prerender = false;
+
+const { slug } = Astro.params;
+if (!slug) {
+  throw new Error("Slug is required");
+}
+const book = await fetchBookById(slug);
+
+if (!book) {
+  throw new Error("Libro no encontrado");
 }
 
-const { book } = Astro.props;
+const pageTitle = `${book.title} | Club de Lectura`;
 
-const pageTitle = `${book.data.title} | Club de Lectura`;
+// Calcular rating promedio
+const averageRating = book.ratings
+  ? Object.values(book.ratings).reduce((sum, rating) => sum + rating, 0) /
+    Object.keys(book.ratings).length
+  : 0;
+
+const totalRatings = book.ratings ? Object.keys(book.ratings).length : 0;
 ---
 
 <Layout title={pageTitle}>
-  <section>
-    <div
-      class="min-h-screen bg-[#F5F5F0] p-4 sm:p-8 flex items-center justify-center"
-    >
+  <main
+    class="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30"
+  >
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden">
+      <!-- Background Elements -->
       <div
-        class="w-full max-w-5xl mx-auto bg-white rounded-3xl p-6 sm:p-8 md:p-12 flex flex-col md:flex-row gap-8 md:gap-16"
+        class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(120,119,198,0.1),transparent_50%)]"
       >
-        <div class="w-full md:w-1/3 flex justify-center">
-          <div class="relative group w-2/3 md:w-full">
-            <div
-              class="relative transition-transform duration-700 ease-out transform"
-              style={{
-                transformStyle: "preserve-3d",
-                perspective: "1500px",
-                transformOrigin: "left",
-              }}
-            >
-              <Image
-                src={book.data.bookImage}
-                alt="Book cover"
-                class="w-full rounded-lg shadow-xl"
-              />
-            </div>
+      </div>
+      <div
+        class="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(255,154,158,0.1),transparent_50%)]"
+      >
+      </div>
 
-            <div
-              class="absolute bottom-0 left-1/2 w-full h-1/6 -translate-x-1/2 translate-y-1/2 bg-gradient-to-t from-black/20 to-transparent blur-xl rounded-full transition-all duration-700 group-hover:translate-x-[-60%]"
-              style={{
-                transformOrigin: "center top",
-              }}
-            >
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
+        <!-- Breadcrumb -->
+        <nav class="flex items-center space-x-2 text-sm text-gray-500 mb-8">
+          <a href="/" class="hover:text-gray-700 transition-colors">Inicio</a>
+          <span>/</span>
+          <a href="/libros" class="hover:text-gray-700 transition-colors"
+            >Libros</a
+          >
+          <span>/</span>
+          <span class="text-gray-900">{book.title}</span>
+        </nav>
+
+        <!-- Main Content -->
+        <div
+          class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start"
+        >
+          <!-- Book Cover Section -->
+          <div class="relative">
+            <div class="sticky top-8">
+              <!-- Book Cover Container -->
+              <div class="relative group mx-auto max-w-sm">
+                <!-- Glow Effect -->
+                <div
+                  class="absolute -inset-4 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                >
+                </div>
+
+                <!-- Book Cover -->
+                <div
+                  class="relative transform transition-all duration-700 hover:scale-105"
+                >
+                  <div class="relative overflow-hidden rounded-2xl shadow-2xl">
+                    <img
+                      src={book.bookImage}
+                      alt={`Portada de ${book.title}`}
+                      class="w-full h-auto object-cover"
+                      loading="eager"
+                    />
+                    <!-- Overlay gradient -->
+                    <div
+                      class="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent"
+                    >
+                    </div>
+                  </div>
+
+                  <!-- Book spine effect -->
+                  <div
+                    class="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-gray-800 to-gray-900 rounded-l-2xl transform -translate-x-1 shadow-lg"
+                  >
+                  </div>
+                </div>
+
+                <!-- Floating shadow -->
+                <div
+                  class="absolute bottom-0 left-1/2 w-3/4 h-8 bg-black/20 rounded-full blur-xl transform -translate-x-1/2 translate-y-4 transition-all duration-700 group-hover:scale-110"
+                >
+                </div>
+              </div>
+
+              <!-- Book Stats -->
+              <div class="mt-8 space-y-4">
+                <div
+                  class="flex items-center justify-between p-4 bg-white/80 backdrop-blur-sm rounded-xl border border-gray-200/50"
+                >
+                  <span class="text-sm text-gray-600">Año de publicación</span>
+                  <span class="font-semibold text-gray-900">{book.pubyear}</span
+                  >
+                </div>
+
+                <div
+                  class="flex items-center justify-between p-4 bg-white/80 backdrop-blur-sm rounded-xl border border-gray-200/50"
+                >
+                  <span class="text-sm text-gray-600">Categoría</span>
+                  <span
+                    class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium"
+                  >
+                    {book.category}
+                  </span>
+                </div>
+
+                <div
+                  class="flex items-center justify-between p-4 bg-white/80 backdrop-blur-sm rounded-xl border border-gray-200/50"
+                >
+                  <span class="text-sm text-gray-600">Semana de lectura</span>
+                  <span
+                    class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium"
+                  >
+                    Semana {book.week}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="w-full md:w-2/3">
-          <h1 class="text-3xl sm:text-4xl font-bold mb-2">
-            {book.data.title}
-          </h1>
-          <p class="text-lg sm:text-xl text-gray-600 mb-4">
-            {book.data.authors}
-          </p>
+          <!-- Book Details Section -->
+          <div class="space-y-8">
+            <!-- Header -->
+            <div class="space-y-6">
+              <div>
+                <h1
+                  class="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4"
+                >
+                  {book.title}
+                </h1>
+                <p class="text-xl sm:text-2xl text-gray-600 font-medium">
+                  por <span class="text-gray-900">{book.author}</span>
+                </p>
+              </div>
 
-          <div class="flex gap-4 mb-8 sm:mb-12">
-            <a
-              href={`https://drive.google.com/uc?export=download&id=${book.data.id}`}
-            >
+              <!-- Rating Section -->
+              <div class="mt-4">
+                <BookRating
+                  bookSlug={slug}
+                  initialRating={averageRating}
+                  initialTotalRatings={totalRatings}
+                  pawImageUrl={paw.src}
+                  ratings={book.ratings}
+                  client:only
+                />
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="prose prose-lg max-w-none">
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">Descripción</h2>
+              <div class="text-gray-700 leading-relaxed text-lg">
+                {book.description}
+              </div>
+            </div>
+
+            <!-- Downloads Section -->
+            {
+              book.downloads && book.downloads.length > 0 && (
+                <div class="space-y-4">
+                  <h2 class="text-2xl font-bold text-gray-900">
+                    Descargas disponibles
+                  </h2>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {book.downloads.map((download) => (
+                      <a
+                        href={download.url}
+                        class="group flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                          {download.type === "pdf" && (
+                            <svg
+                              class="w-6 h-6 text-white"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M4 18h12V6l-4-4H4v16zm8-14v3h3l-3-3z" />
+                            </svg>
+                          )}
+                          {download.type === "epub" && (
+                            <svg
+                              class="w-6 h-6 text-white"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm2 3h4v2H8V5zm0 4h4v2H8V9zm0 4h4v2H8v-2z" />
+                            </svg>
+                          )}
+                          {download.type === "audiobook" && (
+                            <svg
+                              class="w-6 h-6 text-white"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M8 15A7 7 0 1 1 8 1v14zm1 0A8 8 0 1 0 9 0v15z" />
+                            </svg>
+                          )}
+                          {!["pdf", "epub", "audiobook"].includes(
+                            download.type
+                          ) && (
+                            <svg
+                              class="w-6 h-6 text-white"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+                            </svg>
+                          )}
+                        </div>
+                        <div class="flex-1">
+                          <p class="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                            {download.type.toUpperCase()}
+                          </p>
+                          <p class="text-sm text-gray-500">Descargar archivo</p>
+                        </div>
+                        <svg
+                          class="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )
+            }
+
+            <!-- Legacy Download Button (fallback) -->
+            <div class="flex gap-4">
               <DownloadButton client:load />
-            </a>
-          </div>
-
-          <div class="mb-8">
-            <h2 class="text-lg font-semibold mb-4">Descripción</h2>
-            <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
-              {book.data.description}
-            </p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <CommentSection bookId={book.data.week} client:only />
-  </section>
+    </section>
+
+    <!-- Comments Section -->
+    <section class="relative bg-white">
+      <div
+        class="absolute inset-0 bg-gradient-to-b from-transparent via-gray-50/50 to-gray-100/50"
+      >
+      </div>
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="max-w-4xl mx-auto">
+          <CommentSection bookId={slug} client:only />
+        </div>
+      </div>
+    </section>
+  </main>
 </Layout>
+
+<style>
+  /* Subtle animations */
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+
+  .book-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  /* Smooth scrolling for sticky elements */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Enhanced backdrop blur support */
+  @supports (backdrop-filter: blur(10px)) {
+    .backdrop-blur-sm {
+      backdrop-filter: blur(4px);
+    }
+  }
+</style>

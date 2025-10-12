@@ -31,7 +31,6 @@ const currentPath = Astro.url.pathname;
   </head>
   <body>
     <Navbar client:only currentPath={currentPath} />
-    <Header />
     <main aria-label="Main content">
       <slot />
     </main>

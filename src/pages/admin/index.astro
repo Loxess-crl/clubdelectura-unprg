@@ -1,0 +1,10 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import IndexAdmin from "@/components/admin/IndexAdmin";
+
+const currentPath = Astro.url.pathname;
+---
+
+<Layout title="Administracion - Club de Lectura" lang="es-PE">
+  <IndexAdmin currentPath={currentPath} client:only />
+</Layout>

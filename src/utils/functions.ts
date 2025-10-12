@@ -27,3 +27,26 @@ export const getRelativeTime = (timestamp: number): string => {
   }
   return rtf.format(0, "second");
 };
+
+export function getSlugFromName(name: string): string {
+  if (!name) return "";
+
+  const from = "áéíóúñäëïöüÁÉÍÓÚÑÄËÏÖÜ";
+  const to = "aeiounaeiouAEIOUNAEIOU";
+
+  const slug = name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(new RegExp(`[${from}]`, "g"), (c) => {
+      const index = from.indexOf(c);
+      return to[index] || c;
+    })
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]+/g, "")
+    .replace(/--+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+  return slug;
+}

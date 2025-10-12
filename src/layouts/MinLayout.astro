@@ -1,0 +1,36 @@
+---
+import Meta from "@components/Meta.astro";
+import { SITE } from "@data/constants";
+import "../styles/fonts.css";
+import "../styles/global.css";
+import { Toaster } from "@/components/ui/shadcn/Toaster";
+
+const {
+  title = SITE.title,
+  meta,
+  structuredData,
+  lang = "es-PE",
+} = Astro.props;
+
+interface Props {
+  title?: string;
+  meta?: string;
+  structuredData?: object;
+  lang?: string;
+}
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <Meta meta={meta} structuredData={structuredData} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <main aria-label="Main content">
+      <slot />
+    </main>
+    <Toaster client:load />
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+  </body>
+</html>

@@ -4,7 +4,7 @@ export const SITE = {
   title: "Club de Lectura - UNPRG",
   tagline: "Club de Lectura UNPRG",
   description:
-    "Club de Lectura UNPRG es una comunidad de lectores que busca fomentar la lectura en la comunidad universitaria.",
+    "Club de Lectura UNPRG es una comunidad de lectores que busca fomentar la lectura en la comunidad universitaria. Únete a nosotros para compartir tus opiniones, descubrir nuevos libros y conectar con otros lectores apasionados.",
   description_short:
     "Club de Lectura UNPRG es una comunidad de lectores que busca fomentar la lectura en la comunidad universitaria.",
   url: "https://clubdelectura-unprg.vercel.app",
@@ -37,7 +37,7 @@ export const OG = {
   url: SITE.url,
   title: `${SITE.title}`,
   description:
-    "Club de Lectura UNPRG es una comunidad de lectores que busca fomentar la lectura en la comunidad universitaria.",
+    "Club de Lectura UNPRG es una comunidad de lectores que busca fomentar la lectura en la comunidad universitaria. Únete a nosotros para compartir tus opiniones, descubrir nuevos libros y conectar con otros lectores apasionados.",
   image: ogImageSrc,
 };
 
@@ -47,4 +47,5 @@ export const links = {
 
 export enum LocalStorageKeys {
   user = "user",
+  role = "userRole",
 }

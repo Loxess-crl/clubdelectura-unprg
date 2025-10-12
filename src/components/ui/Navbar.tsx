@@ -8,6 +8,7 @@ import {
   ChevronLeft,
   BookOpen,
   LogOut,
+  Columns3,
 } from "lucide-react";
 import {
   Avatar,
@@ -19,6 +20,7 @@ import LoginModal from "./LoginModal";
 import {
   clearTotalLocalStorage,
   getItemsFromLocalStorage,
+  isUserAdmin,
 } from "@/hooks/localStorageService";
 import { LocalStorageKeys } from "@/data/constants";
 import type { User as IUser } from "@/interfaces/user.interface";
@@ -86,6 +88,7 @@ const Navbar = ({ currentPath }: { currentPath: string }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const user = getItemsFromLocalStorage<IUser>(LocalStorageKeys.user);
   const userAvatarFallback = user?.displayName.charAt(0) ?? "U";
+  const isAdmin = isUserAdmin();
 
   const onLogout = () => {
     clearTotalLocalStorage();
@@ -193,6 +196,15 @@ const Navbar = ({ currentPath }: { currentPath: string }) => {
             >
               Perfil
             </SidebarButton>
+            {isAdmin && (
+              <SidebarButton
+                href="/admin"
+                isActive={currentPath.includes("/admin")}
+                icon={<Columns3 />}
+              >
+                Dashboard
+              </SidebarButton>
+            )}
           </nav>
 
           <QuoteCard />

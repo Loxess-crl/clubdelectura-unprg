@@ -2,15 +2,17 @@
 import ClubInformation from "@/components/ClubInformation.astro";
 import Layout from "@layouts/Layout.astro";
 
-import { getCollection } from "astro:content";
 import FeaturedBooks from "@/components/FeaturedBooks.astro";
 import HeroSection from "@/components/HeroSection";
+import { fetchAllBooks } from "@/services/book.service";
 
-const books = await getCollection("books");
+const booksData = await fetchAllBooks();
 
-const lastBook = books.sort((a, b) => {
-  return Number(b.data.week) - Number(a.data.week);
-})[0];
+const books = Object.values(booksData)
+  .filter((book) => !book.comments)
+  .sort((a, b) => b.createdAt - a.createdAt);
+
+const lastBook = books[0];
 ---
 
 <Layout title="Club de Lectura - UNPRG" lang="es-PE">
