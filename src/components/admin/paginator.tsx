@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Pagination,
   PaginationContent,
@@ -7,8 +6,8 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
-import { IMeta } from "@/types/generic";
+} from "@/components/ui/shadcn/pagination";
+import type { IMeta } from "@/types/generic";
 
 interface PaginationComponentProps {
   meta: IMeta;
@@ -16,8 +15,9 @@ interface PaginationComponentProps {
 }
 
 export function Paginator({ meta, onPageChange }: PaginationComponentProps) {
-  const { totalCount, pageNumber, pageSize, hasNextPage, hasPreviousPage } = meta;
-  
+  const { totalCount, pageNumber, pageSize, hasNextPage, hasPreviousPage } =
+    meta;
+
   // Calcular valores derivados
   const lastPage = Math.ceil(totalCount / pageSize);
   const from = (pageNumber - 1) * pageSize + 1;
@@ -90,9 +90,7 @@ export function Paginator({ meta, onPageChange }: PaginationComponentProps) {
           <PaginationItem>
             <PaginationNext
               onClick={() => onPageChange(pageNumber + 1)}
-              className={
-                !hasNextPage ? "pointer-events-none opacity-50" : ""
-              }
+              className={!hasNextPage ? "pointer-events-none opacity-50" : ""}
               aria-disabled={!hasNextPage}
             />
           </PaginationItem>

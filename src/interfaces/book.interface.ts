@@ -8,6 +8,7 @@ export interface Book {
   title: string;
   week: string; // semana de lectura
   createdAt: number;
+  comments: Comment[];
 
   // 📥 Recursos descargables
   downloads?: {

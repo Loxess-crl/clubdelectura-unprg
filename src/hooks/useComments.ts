@@ -61,6 +61,8 @@ export const useCommentsWithUser = (slug: string) => {
       );
 
       setComments(enrichedComments);
+      console.log("enrichedComments", enrichedComments);
+
       setLoading(false);
     });
 
