@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Star, User } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Star } from "lucide-react";
 import { getItemsFromLocalStorage } from "@/hooks/localStorageService";
 import type { User as IUser } from "@/interfaces/user.interface";
 import { LocalStorageKeys } from "@/data/constants";

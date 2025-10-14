@@ -5,14 +5,14 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@components/ui/shadcn/Dialog";
-import { Button } from "./shadcn/Button";
+} from "@components/ui/shadcn/dialog";
+import { Button } from "./shadcn/button";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useState } from "react";
 import { Loader2Icon } from "lucide-react";
 import { app } from "@/firebase/client";
 import type { User } from "@/interfaces/user.interface";
-import { addUser, getUserById, getUserRole } from "@/hooks/useUser";
+import { addUser, getUserWithRoles } from "@/hooks/useUser";
 import { setLocalStorageItem } from "@/hooks/localStorageService";
 import { LocalStorageKeys } from "@/data/constants";
 app;
@@ -37,20 +37,24 @@ const LoginModal = ({
     signInWithPopup(auth, provider)
       .then(async (result) => {
         const user_log = result.user;
-        const user = await getUserById(user_log.uid);
+        // Obtener usuario con roles incluidos
+        const user = await getUserWithRoles(user_log.uid);
+
         if (user) {
+          // Usuario existe, actualizar foto de Google
           user.googlePhotoUrl = user_log.photoURL || "";
           setLocalStorageItem(LocalStorageKeys.user, user);
           setIsLoggedId(user.id);
-          getUserRole(user.id)
-            .then((role) => {
-              const userRole = role || "user";
-              setLocalStorageItem(LocalStorageKeys.role, userRole);
-            })
-            .catch((error) => {
-              console.error("Error al obtener el rol del usuario: ", error);
-            });
+
+          // Guardar el primer rol para compatibilidad (opcional)
+          if (user.roles) {
+            const firstRole = Object.values(user.roles)[0] || "user";
+            setLocalStorageItem(LocalStorageKeys.role, firstRole);
+          } else {
+            setLocalStorageItem(LocalStorageKeys.role, "user");
+          }
         } else {
+          // Crear nuevo usuario
           const newUser: User = {
             id: user_log.uid,
             displayName: user_log.displayName || "",
@@ -60,6 +64,7 @@ const LoginModal = ({
           };
           addUser(newUser);
           setLocalStorageItem(LocalStorageKeys.user, newUser);
+          setLocalStorageItem(LocalStorageKeys.role, "user");
           setIsLoggedId(newUser.id);
         }
       })

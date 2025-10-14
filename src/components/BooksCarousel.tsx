@@ -1,4 +1,3 @@
-import type { CollectionEntry } from "astro:content";
 import { useEffect, useState } from "react";
 import {
   Carousel,
@@ -8,9 +7,9 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from "./ui/shadcn/Carousel";
-import { Card, CardContent } from "./ui/shadcn/Card";
+import { Card, CardContent } from "./ui/shadcn/card";
 import { motion } from "framer-motion";
-import { Download, Star, Calendar, User, BookOpen, Heart } from "lucide-react";
+import { Star, Calendar, User, BookOpen } from "lucide-react";
 import type { Book } from "@/interfaces/book.interface";
 
 const BooksCarousel = ({ books }: { books: Book[] }) => {
@@ -80,7 +79,7 @@ const BooksCarousel = ({ books }: { books: Book[] }) => {
                           <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-accentTheme to-primaryTheme text-white rounded-full text-xs font-semibold shadow-md">
                               <Calendar className="w-3 h-3" />
-                              Semana {book.week}
+                              Lectura {book.week}
                             </div>
                           </div>
 

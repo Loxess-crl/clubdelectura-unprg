@@ -1,5 +1,5 @@
 import type { Book } from "@/interfaces/book.interface";
-import { Search, Star, Download, Calendar, User, Filter } from "lucide-react";
+import { Search, Star, Download, Calendar, User } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function AllBooks({ books }: { books: Book[] }) {
@@ -193,7 +193,7 @@ export default function AllBooks({ books }: { books: Book[] }) {
                   <div className="absolute top-3 right-3">
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-500/90 backdrop-blur-sm text-white">
                       <Calendar className="w-3 h-3 mr-1" />
-                      Semana {book.week}
+                      Lectura {book.week}
                     </span>
                   </div>
 

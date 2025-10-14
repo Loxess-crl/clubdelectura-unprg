@@ -60,9 +60,7 @@ const getDownloadIcon = (type: string) => {
 
 <section id="info" class="py-20 bg-white">
   <div class="container mx-auto px-4">
-    <h2 class="text-4xl font-bold text-slate-900 mb-12">
-      Lectura de la semana
-    </h2>
+    <h2 class="text-4xl font-bold text-slate-900 mb-12">Lectura del Momento</h2>
     <div class="flex flex-col md:flex-row items-start gap-12">
       <div class="flex-shrink-0 w-full md:w-1/2 lg:w-[350px]">
         <img
@@ -86,7 +84,7 @@ const getDownloadIcon = (type: string) => {
           <span class="h-4 w-px bg-[#66503b]/50"></span>
           <span>{book.category}</span>
           <span class="h-4 w-px bg-[#66503b]/50"></span>
-          <span class="font-medium text-[#ea9a12]">Semana {book.week}</span>
+          <span class="font-medium text-[#ea9a12]">Lectura {book.week}</span>
         </div>
 
         {/* Calificaciones */}
@@ -113,11 +111,12 @@ const getDownloadIcon = (type: string) => {
           book.downloads && book.downloads.length > 0 && (
             <div class="space-y-3">
               <h4 class="text-lg font-semibold text-[#66503b]">
-                Descargas disponibles:
+                Recursos disponibles:
               </h4>
               <div class="flex flex-wrap gap-3">
                 {book.downloads.map((download, index) => (
                   <a
+                    id={"download-" + index}
                     href={download.url}
                     target="_blank"
                     rel="noopener noreferrer"

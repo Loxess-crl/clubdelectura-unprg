@@ -1,6 +1,6 @@
 import type { Book } from "@/interfaces/book.interface";
 import { fetchAllBooks } from "@/services/book.service";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 interface Meta {
   current_page: number;
@@ -12,23 +12,18 @@ interface Meta {
 
 interface UseBooksProps {
   itemsPerPage?: number;
+  searchTerm?: string;
 }
 
 export const useBooks = (props: UseBooksProps) => {
-  const itemsPerPage = props.itemsPerPage || 10;
+  const { itemsPerPage = 10, searchTerm = "" } = props;
   const [books, setBooks] = useState<Book[]>([]);
-  const [dataPaginated, setDataPaginated] = useState<Book[]>([]);
-  const [meta, setMeta] = useState<Meta>({
-    current_page: 1,
-    last_page: 1,
-    from: 1,
-    to: 1,
-    total: 0,
-  });
+  const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
-  // Fetch all books una sola vez
+  // Fetch all books
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -45,48 +40,70 @@ export const useBooks = (props: UseBooksProps) => {
     };
 
     fetchData();
-  }, []);
+  }, [refreshTrigger]);
 
-  // Paginación controlada por current_page
-  useEffect(() => {
-    const total = books.length;
-    const lastPage = Math.max(Math.ceil(total / itemsPerPage), 1);
-    const currentPage = Math.min(meta.current_page, lastPage);
-    const from = (currentPage - 1) * itemsPerPage;
-    const to = from + itemsPerPage;
+  // Filtrar libros basándose en el término de búsqueda
+  const filteredBooks = useMemo(() => {
+    if (!searchTerm.trim()) return books;
 
-    setMeta({
-      current_page: currentPage,
-      last_page: lastPage,
-      from: from + 1,
-      to: Math.min(to, total),
-      total,
+    const searchLower = searchTerm.toLowerCase();
+    return books.filter((book) => {
+      return (
+        book.title.toLowerCase().includes(searchLower) ||
+        book.author.toLowerCase().includes(searchLower) ||
+        book.category.toLowerCase().includes(searchLower) ||
+        book.week.toLowerCase().includes(searchLower)
+      );
     });
+  }, [books, searchTerm]);
 
-    setDataPaginated(books.slice(from, to));
-  }, [books, meta.current_page, itemsPerPage]);
+  // Resetear a página 1 cuando cambia el término de búsqueda
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
+
+  // Calcular paginación y meta data basándose en los libros filtrados
+  const { dataPaginated, meta } = useMemo(() => {
+    const total = filteredBooks.length;
+    const lastPage = Math.max(Math.ceil(total / itemsPerPage), 1);
+    const validCurrentPage = Math.min(Math.max(currentPage, 1), lastPage);
+    const from = (validCurrentPage - 1) * itemsPerPage;
+    const to = Math.min(from + itemsPerPage, total);
+
+    const metaData: Meta = {
+      current_page: validCurrentPage,
+      last_page: lastPage,
+      from: total === 0 ? 0 : from + 1,
+      to: total === 0 ? 0 : to,
+      total,
+    };
+
+    const paginatedData = filteredBooks.slice(from, to);
+
+    return { dataPaginated: paginatedData, meta: metaData };
+  }, [filteredBooks, currentPage, itemsPerPage]);
 
   const nextPage = () => {
-    if (meta.current_page < meta.last_page) {
-      setMeta((prev) => ({ ...prev, current_page: prev.current_page + 1 }));
+    if (currentPage < meta.last_page) {
+      setCurrentPage((prev) => prev + 1);
     }
   };
 
   const prevPage = () => {
-    if (meta.current_page > 1) {
-      setMeta((prev) => ({ ...prev, current_page: prev.current_page - 1 }));
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
     }
   };
 
   const goToPage = (page: number) => {
     if (page >= 1 && page <= meta.last_page) {
-      setMeta((prev) => ({ ...prev, current_page: page }));
+      setCurrentPage(page);
     }
   };
 
   const refresh = () => {
-    setMeta((prev) => ({ ...prev, current_page: 1 }));
-    setBooks([]); // Reset books to trigger re-fetch
+    setCurrentPage(1);
+    setRefreshTrigger((prev) => prev + 1);
   };
 
   return {
@@ -98,5 +115,6 @@ export const useBooks = (props: UseBooksProps) => {
     prevPage,
     goToPage,
     refresh,
+    allBooks: books, // Exponer todos los libros por si se necesitan
   };
 };

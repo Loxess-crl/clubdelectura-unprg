@@ -1,18 +1,16 @@
 import { addComment, updateLikesDislikes } from "@/hooks/useComments";
-import type { Comment, CommentWithUser } from "@/interfaces/comment.interface";
+import type { CommentWithUser } from "@/interfaces/comment.interface";
 import { getRelativeTime } from "@/utils/functions";
 import {
   ThumbsDown,
   ThumbsUp,
   MessageCircle,
-  MoreHorizontal,
-  Heart,
   Reply,
   Clock,
 } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import LoginModal from "./LoginModal";
-import { Avatar, AvatarFallback, AvatarImage } from "./shadcn/Avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "./shadcn/avatar";
 import { getItemsFromLocalStorage } from "@/hooks/localStorageService";
 import type { User } from "@/interfaces/user.interface";
 import { LocalStorageKeys } from "@/data/constants";
@@ -31,7 +29,6 @@ export default function CommentCard({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReplying, setIsReplying] = useState(false);
   const [replyContent, setReplyContent] = useState("");
-  const [showActions, setShowActions] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [isDisliked, setIsDisliked] = useState(false);
 

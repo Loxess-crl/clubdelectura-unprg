@@ -14,13 +14,13 @@ import {
   Avatar,
   AvatarImage,
   AvatarFallback,
-} from "@/components/ui/shadcn/Avatar";
-import { Button } from "@/components/ui/shadcn/Button";
+} from "@/components/ui/shadcn/avatar";
+import { Button } from "@/components/ui/shadcn/button";
 import LoginModal from "./LoginModal";
 import {
   clearTotalLocalStorage,
+  currentUserHasRole,
   getItemsFromLocalStorage,
-  isUserAdmin,
 } from "@/hooks/localStorageService";
 import { LocalStorageKeys } from "@/data/constants";
 import type { User as IUser } from "@/interfaces/user.interface";
@@ -88,7 +88,7 @@ const Navbar = ({ currentPath }: { currentPath: string }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const user = getItemsFromLocalStorage<IUser>(LocalStorageKeys.user);
   const userAvatarFallback = user?.displayName.charAt(0) ?? "U";
-  const isAdmin = isUserAdmin();
+  const isAdmin = currentUserHasRole("admin");
 
   const onLogout = () => {
     clearTotalLocalStorage();
@@ -128,7 +128,7 @@ const Navbar = ({ currentPath }: { currentPath: string }) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
               >
-                Club de Literatura
+                Club de Lectura
               </motion.div>
               <Button
                 variant="ghost"
@@ -184,7 +184,10 @@ const Navbar = ({ currentPath }: { currentPath: string }) => {
             </SidebarButton>
             <SidebarButton
               href="/libros"
-              isActive={currentPath.includes("/libros")}
+              isActive={
+                currentPath.includes("/libros") &&
+                currentPath.includes("/admin") === false
+              }
               icon={<Book />}
             >
               Biblioteca

@@ -1,14 +1,14 @@
 export interface Book {
   author: string;
   slug: string;
-  bookImage: string;
+  bookImage?: string;
   category: string;
   description: string;
-  pubyear: number;
+  pubyear: string;
   title: string;
   week: string; // semana de lectura
   createdAt: number;
-  comments: Comment[];
+  comments?: Comment[];
 
   // 📥 Recursos descargables
   downloads?: {

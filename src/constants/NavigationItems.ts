@@ -1,10 +1,4 @@
-import {
-  Book,
-  BookAIcon,
-  LayoutDashboard,
-  Users,
-  type LucideIcon,
-} from "lucide-react";
+import { BookAIcon, LayoutDashboard, type LucideIcon } from "lucide-react";
 import { AppRoutes } from "./AppRoutes";
 
 interface NavItem {
@@ -22,8 +16,8 @@ interface NavItem {
 export const NavigationItems: NavItem[] = [
   /* GENERAL */
   {
-    title: "Dashboard",
-    url: AppRoutes.ADMIN.DASHBOARD,
+    title: "Inicio",
+    url: AppRoutes.ADMIN.HOME,
     icon: LayoutDashboard,
     isActive: false,
     groupLabel: "General",
@@ -35,11 +29,11 @@ export const NavigationItems: NavItem[] = [
     isActive: false,
     groupLabel: "Administración",
   },
-  {
-    title: "Usuarios",
-    url: AppRoutes.ADMIN.USERS,
-    icon: Users,
-    isActive: false,
-    groupLabel: "Administración",
-  },
+  // {
+  //   title: "Usuarios",
+  //   url: AppRoutes.ADMIN.USERS,
+  //   icon: Users,
+  //   isActive: false,
+  //   groupLabel: "Administración",
+  // },
 ];

@@ -1,4 +1,3 @@
-import React from "react";
 import { SidebarTrigger } from "@/components/ui/shadcn/sidebar";
 
 export default function Header() {

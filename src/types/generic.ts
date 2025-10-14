@@ -23,10 +23,6 @@ export interface IMeta {
   hasPreviousPage: boolean;
 }
 
-interface ICouldHaveRn {
-  rn?: number;
-}
-
 export interface IPaginatedResponse<T> {
   items: T[];
   totalCount: number;
@@ -36,9 +32,9 @@ export interface IPaginatedResponse<T> {
   hasPreviousPage: boolean;
 }
 
-export interface DataFormProps<T> {
+export interface DataFormProps<T, R = T> {
   data?: T;
-  onSave: (data: T) => void;
+  onSave: (data: R) => void;
   onCancel: () => void;
   isLoading?: boolean;
   error?: string | null;

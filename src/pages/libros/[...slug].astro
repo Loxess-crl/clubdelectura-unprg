@@ -1,6 +1,5 @@
 ---
 import CommentSection from "@/components/CommentSection";
-import { DownloadButton } from "@/components/ui/DownloadButton";
 import Layout from "@/layouts/Layout.astro";
 import BookRating from "@/components/PawRated";
 import paw from "@assets/img/club2.png";
@@ -128,11 +127,11 @@ const totalRatings = book.ratings ? Object.keys(book.ratings).length : 0;
                 <div
                   class="flex items-center justify-between p-4 bg-white/80 backdrop-blur-sm rounded-xl border border-gray-200/50"
                 >
-                  <span class="text-sm text-gray-600">Semana de lectura</span>
+                  <span class="text-sm text-gray-600">Fecha de lectura</span>
                   <span
                     class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium"
                   >
-                    Semana {book.week}
+                    Lectura {book.week}
                   </span>
                 </div>
               </div>
@@ -180,7 +179,7 @@ const totalRatings = book.ratings ? Object.keys(book.ratings).length : 0;
               book.downloads && book.downloads.length > 0 && (
                 <div class="space-y-4">
                   <h2 class="text-2xl font-bold text-gray-900">
-                    Descargas disponibles
+                    Recursos disponibles
                   </h2>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {book.downloads.map((download) => (
@@ -255,11 +254,6 @@ const totalRatings = book.ratings ? Object.keys(book.ratings).length : 0;
                 </div>
               )
             }
-
-            <!-- Legacy Download Button (fallback) -->
-            <div class="flex gap-4">
-              <DownloadButton client:load />
-            </div>
           </div>
         </div>
       </div>

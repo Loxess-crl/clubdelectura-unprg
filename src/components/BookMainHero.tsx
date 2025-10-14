@@ -28,7 +28,7 @@ const BookClubHero = ({ books }: { books: Book[] }) => {
               </h1>
               <p className="text-gray-600 text-lg md:text-xl leading-relaxed mb-6 md:mb-8 max-w-lg mx-auto lg:mx-0">
                 Explora nuestra colección de libros discutidos en el club. Cada
-                semana, una nueva aventura literaria nos espera.
+                momento, una nueva aventura literaria nos espera.
               </p>
               <a
                 href={links.whatsapp}

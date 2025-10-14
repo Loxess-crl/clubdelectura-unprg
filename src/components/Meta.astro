@@ -17,7 +17,7 @@ const {
 const URL = `${Astro.site}`;
 const author = SITE.author;
 const canonical = Astro.url.href;
-const basePath = Astro.url.pathname;
+// const basePath = Astro.url.pathname;
 const ogTitle = OG.title;
 const ogDescription = OG.description;
 const socialImageRes = await getImage({
@@ -109,6 +109,11 @@ const appleTouchIcon = await getImage({
 <meta name="twitter:title" content={ogTitle} />
 <meta name="twitter:description" content={ogDescription} />
 <meta name="twitter:image" content={socialImage} />
+
+<meta
+  name="keywords"
+  content="lectura, club de lectura, UNPRG, Chiclayo, Perú, libros, literatura, comunidad"
+/>
 
 <!-- Links to the webmanifest and sitemap -->
 <!-- <link rel="manifest" href="/manifest.json" /> -->

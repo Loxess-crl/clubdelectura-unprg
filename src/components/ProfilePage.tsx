@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Loader2, X } from "lucide-react";
 import type { User as IUser } from "@/interfaces/user.interface";
 import {
@@ -6,7 +6,7 @@ import {
   setLocalStorageItem,
 } from "@/hooks/localStorageService";
 import { LocalStorageKeys } from "@/data/constants";
-import { Avatar, AvatarFallback } from "./ui/shadcn/Avatar";
+import { Avatar, AvatarFallback } from "./ui/shadcn/avatar";
 import { updateUser } from "@/hooks/useUser";
 import { useToast } from "@/hooks/useToast";
 

@@ -1,5 +1,4 @@
 import AdminLayout from "@/components/admin/AdminLayout";
-import React from "react";
 
 const IndexAdmin = ({ currentPath }: { currentPath: string }) => {
   return (

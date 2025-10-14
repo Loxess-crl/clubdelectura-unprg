@@ -1,5 +1,4 @@
 export const PawIcon = ({
-  hover = false,
   filled = false,
 }: {
   hover?: boolean;

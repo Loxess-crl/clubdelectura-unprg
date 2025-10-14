@@ -1,9 +1,8 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import type { Book } from "@/interfaces/book.interface";
 
 export default function TopBooks({ books }: { books: Book[] }) {
-  const [topBooks, setTopBooks] = useState<Book[]>(books.slice(0, 3));
+  const topBooks = books.slice(0, 3);
 
   return (
     <div className="lg:w-2/3 w-full">
@@ -35,7 +34,7 @@ export default function TopBooks({ books }: { books: Book[] }) {
                 <div className="bg-gradient-to-t from-black/95 via-black/80 to-transparent pt-6 sm:pt-8 pb-3 sm:pb-4 px-4 sm:px-6">
                   <div className="relative z-10">
                     <span className="inline-block px-2 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white/90 text-xs font-medium mb-2">
-                      Semana {book.week}
+                      Lectura {book.week}
                     </span>
                     <h3 className="text-base sm:text-lg font-bold text-white mb-1 drop-shadow-sm leading-tight">
                       {book.title}

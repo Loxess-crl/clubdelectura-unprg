@@ -2,8 +2,11 @@ import { AppSidebar } from "@/components/admin/app-sidebar";
 import Header from "@/components/admin/Header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/shadcn/sidebar";
 import { LocalStorageKeys } from "@/data/constants";
-import { getItemsFromLocalStorage } from "@/hooks/localStorageService";
-import type { User } from "firebase/auth";
+import {
+  currentUserHasAnyRole,
+  getItemsFromLocalStorage,
+} from "@/hooks/localStorageService";
+import type { User } from "@/interfaces/user.interface";
 import { useEffect, useState } from "react";
 
 export default function AdminLayout({
@@ -13,20 +16,25 @@ export default function AdminLayout({
   children: React.ReactNode;
   currentPath: string;
 }) {
-  const allowRoles = ["admin", "moderator"];
   const user = getItemsFromLocalStorage<User>(LocalStorageKeys.user);
-  const role = getItemsFromLocalStorage<string>(LocalStorageKeys.role);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (user && role) {
-      if (!role || !allowRoles.includes(role)) {
-        window.location.href = "/";
-      } else {
-        setLoading(false);
-      }
+    if (!user) {
+      // Si no hay usuario, redirigir al inicio
+      window.location.href = "/";
+      return;
     }
-  }, [user, role]);
+
+    // Verificar si el usuario tiene alguno de los roles permitidos
+    const hasPermission = currentUserHasAnyRole(["admin", "moderator"]);
+
+    if (!hasPermission) {
+      window.location.href = "/";
+    } else {
+      setLoading(false);
+    }
+  }, [user]);
 
   if (loading) {
     return <p>Cargando...</p>;

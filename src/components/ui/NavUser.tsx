@@ -1,6 +1,10 @@
 "use client";
 
-import { Avatar, AvatarFallback } from "@/components/ui/shadcn/Avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/shadcn/avatar";
 import {
   SidebarMenu,
   SidebarMenuButton,
@@ -10,7 +14,6 @@ import { Skeleton } from "@/components/ui/shadcn/skeleton";
 import { getItemsFromLocalStorage } from "@/hooks/localStorageService";
 import { LocalStorageKeys } from "@/data/constants";
 import type { User } from "firebase/auth";
-import { AvatarImage } from "./shadcn/Avatar";
 
 export function NavUser() {
   const user = getItemsFromLocalStorage<User>(LocalStorageKeys.user);

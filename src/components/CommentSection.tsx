@@ -1,16 +1,12 @@
 import React, { useState } from "react";
 import CommentCard from "./ui/Comment";
-import {
-  addComment,
-  useComments,
-  useCommentsWithUser,
-} from "@/hooks/useComments";
-import { Button } from "./ui/shadcn/Button";
+import { addComment, useCommentsWithUser } from "@/hooks/useComments";
+import { Button } from "./ui/shadcn/button";
 import LoginModal from "./ui/LoginModal";
 import { getItemsFromLocalStorage } from "@/hooks/localStorageService";
 import { LocalStorageKeys } from "@/data/constants";
 import type { User } from "@/interfaces/user.interface";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/shadcn/Avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/shadcn/avatar";
 import {
   MessageCircle,
   Send,

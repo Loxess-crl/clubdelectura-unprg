@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/shadcn/table";
-import { Button } from "@/components/ui/shadcn/Button";
+import { Button } from "@/components/ui/shadcn/button";
 import { MoreHorizontal } from "lucide-react";
 import {
   DropdownMenu,
